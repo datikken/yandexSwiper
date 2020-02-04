@@ -4,34 +4,29 @@ $(document).ready(function() {
   let curVideo = videos[activeId];
   let nextVideo = videos[activeId + 1];
 
-  let leftEl = [];
-
   //make back btn initially unclickable
-  let back = document.querySelector('.wrap_controls-left');
-      back.classList.add('block-btn');
+  let back = document.querySelector(".wrap_controls-left");
+  back.classList.add("block-btn");
 
-  function normalize() {
-      let step = 0;
-      let scaleStep = 1;
+  function normalizeBackwards() {}
 
-      videos.forEach((el) => {
-          if(el.classList.value.indexOf('push') > 0) {
-            //   console.log(el);
-          } else {
-            leftEl.push(el);
-          }
-      })
+  function normalizeForward() {
+    let step = 0;
+    let scaleStep = 1;
+    let leftEl = [];
 
-      leftEl.forEach((el) => {
-          el.style.left = el.style.left + step;
-          el.style.transform = `scale(${scaleStep})`
-          step = step + 100;
-          scaleStep = scaleStep - .1;
-      });
-
-    //   console.log(leftEl)
-
-  }    
+    videos.forEach(el => {
+      if (el.classList.value.indexOf("push") < 0) {
+        leftEl.push(el);
+      }
+    });
+    leftEl.forEach(el => {
+      el.style.left = 0 + step;
+      el.style.transform = `scale(${scaleStep})`;
+      step = step + 75;
+      scaleStep = scaleStep - 0.1;
+    });
+  }
 
   function recount(type) {
     switch (type) {
@@ -51,13 +46,13 @@ $(document).ready(function() {
       curVideo.classList.remove("push-back");
       curVideo.classList.add("push-forward");
       recount("forward");
-      back.classList.remove('block-btn');
-      normalize();
+      back.classList.remove("block-btn");
+      normalizeForward();
     } else {
       recount("back");
       curVideo.classList.remove("push-forward");
       curVideo.classList.add("push-back");
-      normalize();
+      normalizeBackwards();
     }
   }
 
