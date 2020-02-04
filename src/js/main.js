@@ -3,12 +3,13 @@ $(document).ready(function() {
   let activeId = 0;
   let curVideo = videos[activeId];
   let nextVideo = videos[activeId + 1];
-
   //make back btn initially unclickable
   let back = document.querySelector(".wrap_controls-left");
   back.classList.add("block-btn");
 
-  function normalizeBackwards() {}
+  function normalizeBackwards() {
+
+  }
 
   function normalizeForward() {
     let step = 0;
@@ -20,6 +21,7 @@ $(document).ready(function() {
         leftEl.push(el);
       }
     });
+
     leftEl.forEach(el => {
       el.style.left = 0 + step;
       el.style.transform = `scale(${scaleStep})`;

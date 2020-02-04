@@ -59,7 +59,6 @@
 	  var activeId = 0;
 	  var curVideo = videos[activeId];
 	  var nextVideo = videos[activeId + 1];
-	
 	  //make back btn initially unclickable
 	  var back = document.querySelector(".wrap_controls-left");
 	  back.classList.add("block-btn");
@@ -76,6 +75,7 @@
 	        leftEl.push(el);
 	      }
 	    });
+	
 	    leftEl.forEach(function (el) {
 	      el.style.left = 0 + step;
 	      el.style.transform = "scale(" + scaleStep + ")";
