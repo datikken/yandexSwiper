@@ -1,0 +1,47 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "Node.js",
+  "main": "app.js",
+  "engines": {
+    "node": "10.16.3",
+    "npm": ">=6.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "NODE_ENV=dev node app.js",
+    "start-server": "node app.js",
+    "watch": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.js --progress --colors",
+    "build:watch": "./node_modules/webpack/bin/webpack.js --config webpack.config.js --progress --colors --watch",
+    "build": "./node_modules/webpack/bin/webpack.js --config webpack.config.js --progress --colors"
+  },
+  "author": "tikken",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "mysql2": "^1.7.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.5.3",
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.8",
+    "babel-preset-es2015": "^6.18.0",
+    "clean-webpack-plugin": "^0.1.14",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.26.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.24.1",
+    "node-sass": "^3.13.0",
+    "postcss-loader": "^1.1.1",
+    "precss": "^1.4.0",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^4.0.2",
+    "string-replace-loader": "^1.0.5",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
