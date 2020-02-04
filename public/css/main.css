@@ -37,7 +37,7 @@ h1 {
     position: absolute;
     top: 0;
     left: 0;
-    transition: transform .5s; }
+    transition: left, transform .5s; }
     .wrap .video:first-child {
       z-index: 0; }
     .wrap .video:nth-child(2) {
@@ -63,5 +63,9 @@ h1 {
 .push-back {
   -ms-transform: translate(0, 0);
       transform: translate(0, 0); }
+
+.block-btn {
+  pointer-events: none;
+  opacity: .5; }
 
 /*# sourceMappingURL=main.css.map*/

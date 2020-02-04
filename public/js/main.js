@@ -52,14 +52,41 @@
 /* 1 */
 /***/ (function(module, exports) {
 
-	"use strict";
+	'use strict';
 	
 	$(document).ready(function () {
 	  var videos = document.querySelectorAll(".video");
 	  var activeId = 0;
-	
 	  var curVideo = videos[activeId];
 	  var nextVideo = videos[activeId + 1];
+	
+	  var leftEl = [];
+	
+	  //make back btn initially unclickable
+	  var back = document.querySelector('.wrap_controls-left');
+	  back.classList.add('block-btn');
+	
+	  function normalize() {
+	    var step = 0;
+	    var scaleStep = 1;
+	
+	    videos.forEach(function (el) {
+	      if (el.classList.value.indexOf('push') > 0) {
+	        //   console.log(el);
+	      } else {
+	        leftEl.push(el);
+	      }
+	    });
+	
+	    leftEl.forEach(function (el) {
+	      el.style.left = el.style.left + step;
+	      el.style.transform = 'scale(' + scaleStep + ')';
+	      step = step + 100;
+	      scaleStep = scaleStep - .1;
+	    });
+	
+	    //   console.log(leftEl)
+	  }
 	
 	  function recount(type) {
 	    switch (type) {
@@ -79,10 +106,13 @@
 	      curVideo.classList.remove("push-back");
 	      curVideo.classList.add("push-forward");
 	      recount("forward");
+	      back.classList.remove('block-btn');
+	      normalize();
 	    } else {
 	      recount("back");
 	      curVideo.classList.remove("push-forward");
 	      curVideo.classList.add("push-back");
+	      normalize();
 	    }
 	  }
 	
@@ -98,7 +128,6 @@
 	        break;
 	    }
 	  }
-	
 	  //controller
 	  $(".wrap_controls-control").on("click", function (el) {
 	    prepare(el);
