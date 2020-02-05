@@ -54,11 +54,14 @@
 
 	"use strict";
 	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
 	$(document).ready(function () {
 	  var back = document.querySelector(".wrap_controls-left");
 	  var forward = document.querySelector(".wrap_controls-right");
 	  var videos = document.querySelectorAll(".video");
-	
+	  var firstVideo = document.querySelector(".active_slide");
+	  var firstInit = true;
 	  var activeId = 0;
 	  var curVideo = videos[activeId];
 	  var videosLength = videos.length;
@@ -73,6 +76,10 @@
 	    if (parseInt(activeId) === 0) {
 	      back.classList.add("block-btn");
 	    }
+	
+	    // if(!firstInit) {
+	    //   back.classList.remove("block-btn");
+	    // }
 	
 	    if (parseInt(lastVideoId) === parseInt(activeId)) {
 	      forward.classList.add("block-btn");
@@ -109,16 +116,18 @@
 	    if (item.nodeName === "VIDEO") {
 	      videos.forEach(function (el) {
 	        try {
+	          el.controls = false;
 	          el.pause();
 	        } catch (e) {
 	          console.log(e);
 	        }
 	      });
 	    }
-	
 	    if (type === 'back') {
+	      item.controls = true;
 	      item.play();
 	    } else {
+	      item.controls = false;
 	      item.pause();
 	    }
 	  }
@@ -135,7 +144,6 @@
 	      if (iteration > videosLength) {
 	        return;
 	      }
-	
 	      if (iteration === 0) {
 	        el.classList.add("active_slide");
 	      }
@@ -195,6 +203,7 @@
 	  }
 	
 	  function push(direction) {
+	
 	    clearActiveSlide();
 	
 	    if (direction >= 0) {
@@ -232,8 +241,18 @@
 	  //controller
 	  $(".wrap_controls-control").on("click", function (el) {
 	    prepare(el);
+	    firstInit = false;
 	  });
 	});
+	
+	var CustomPlayer = function CustomPlayer() {
+	  _classCallCheck(this, CustomPlayer);
+	
+	  this.back = document.querySelector(".wrap_controls-left");
+	  this.forward = document.querySelector(".wrap_controls-right");
+	  this.videos = document.querySelectorAll(".video");
+	  this.firstVideo = document.querySelector(".active_slide");
+	};
 
 /***/ }),
 /* 2 */

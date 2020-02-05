@@ -2,7 +2,8 @@ $(document).ready(function() {
   let back = document.querySelector(".wrap_controls-left");
   let forward = document.querySelector(".wrap_controls-right");
   let videos = document.querySelectorAll(".video");
-
+  let firstVideo = document.querySelector(".active_slide");
+  let firstInit = true;
   let activeId = 0;
   let curVideo = videos[activeId];
   let videosLength = videos.length;
@@ -15,10 +16,14 @@ $(document).ready(function() {
     let activeId = document
       .querySelector(".active_slide")
       .getAttribute("data-id");
-
+    
     if (parseInt(activeId) === 0) {
       back.classList.add("block-btn");
     }
+
+    // if(!firstInit) {
+    //   back.classList.remove("block-btn");
+    // }
 
     if (parseInt(lastVideoId) === parseInt(activeId)) {
       forward.classList.add("block-btn");
@@ -55,16 +60,18 @@ $(document).ready(function() {
     if (item.nodeName === "VIDEO") {
       videos.forEach(el => {
         try {
+          el.controls = false;
           el.pause();
         } catch (e) {
           console.log(e);
         }
       });
     }
-
     if(type === 'back') {
+      item.controls = true;
       item.play();
     } else {
+      item.controls = false;
       item.pause();
     }
   }
@@ -81,7 +88,6 @@ $(document).ready(function() {
       if (iteration > videosLength) {
         return;
       }
-
       if (iteration === 0) {
         el.classList.add("active_slide");
       }
@@ -141,6 +147,7 @@ $(document).ready(function() {
   }
 
   function push(direction) {
+
     clearActiveSlide();
 
     if (direction >= 0) {
@@ -178,5 +185,16 @@ $(document).ready(function() {
   //controller
   $(".wrap_controls-control").on("click", function(el) {
     prepare(el);
+    firstInit = false;
   });
 });
+
+
+class CustomPlayer {
+  constructor() {
+    this.back = document.querySelector(".wrap_controls-left");
+    this.forward = document.querySelector(".wrap_controls-right");
+    this.videos = document.querySelectorAll(".video");
+    this.firstVideo = document.querySelector(".active_slide");
+  }
+}
