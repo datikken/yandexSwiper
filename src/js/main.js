@@ -167,6 +167,17 @@ $(document).ready(function() {
     activeIndex();
   }
 
+  function playPause() {
+    let video = document.querySelector(".active_slide");
+    if (!video.paused) {
+      video.pause();
+      playBtn.style.opacity = 1;
+    } else {
+      video.play();
+      playBtn.style.opacity = 0;
+    }
+  }
+
   function prepare(el) {
     let eventType = el.target.dataset.dir;
     switch (eventType) {
@@ -183,15 +194,14 @@ $(document).ready(function() {
     prepare(el);
     firstInit = false;
   });
+  $(".wrap").on("click", function() {
+      playPause();
+  })
 
   $(playBtn).on("click", function() {
-    let video = document.querySelector(".active_slide");
-    if (!video.paused) {
-      video.pause();
-    } else {
-      video.play();
-    }
+      playPause();
   });
+
 });
 
 // class CustomPlayer {

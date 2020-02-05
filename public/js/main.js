@@ -221,6 +221,17 @@
 	    activeIndex();
 	  }
 	
+	  function playPause() {
+	    var video = document.querySelector(".active_slide");
+	    if (!video.paused) {
+	      video.pause();
+	      playBtn.style.opacity = 1;
+	    } else {
+	      video.play();
+	      playBtn.style.opacity = 0;
+	    }
+	  }
+	
 	  function prepare(el) {
 	    var eventType = el.target.dataset.dir;
 	    switch (eventType) {
@@ -237,14 +248,12 @@
 	    prepare(el);
 	    firstInit = false;
 	  });
+	  $(".wrap").on("click", function () {
+	    playPause();
+	  });
 	
 	  $(playBtn).on("click", function () {
-	    var video = document.querySelector(".active_slide");
-	    if (!video.paused) {
-	      video.pause();
-	    } else {
-	      video.play();
-	    }
+	    playPause();
 	  });
 	});
 	

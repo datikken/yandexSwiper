@@ -13,9 +13,9 @@ body {
   width: 800px;
   height: 398px;
 
-  &:hover .video-icon {
-      opacity: 1;
-  }
+  // &:hover .video-icon {
+  //     opacity: 1;
+  // }
 
   .video-icon {
     position: absolute;
@@ -25,7 +25,7 @@ body {
     transform: translate(-50%, -50%);
     cursor: pointer;
     transition: opacity .1s;
-    opacity: 0;
+    opacity: 1;
   
     &:after {
       content: "";
