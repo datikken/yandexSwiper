@@ -55,13 +55,33 @@
 	"use strict";
 	
 	$(document).ready(function () {
+	  var libIteration = 2;
 	  var videos = document.querySelectorAll(".video");
 	  var activeId = 0;
 	  var curVideo = videos[activeId];
-	
+	  var videosLength = videos.length;
 	  //make back btn initially unclickable
 	  var back = document.querySelector(".wrap_controls-left");
+	  var forward = document.querySelector(".wrap_controls-right");
+	
 	  back.classList.add("block-btn");
+	
+	  function checkStop() {
+	    if (libIteration >= videosLength) {
+	      forward.classList.add("block-btn");
+	      return;
+	    } else {
+	      forward.classList.remove("block-btn");
+	    }
+	  }
+	  //возвращаем элемент по верху всех остальных элементов
+	  function suspendIndex() {
+	    videos.forEach(function (el) {
+	      if ($(el).hasClass("push-forward")) {
+	        el.style.zIndex = -9999;
+	      }
+	    });
+	  }
 	  //строит элементы один за другим туда сюда
 	  function clear() {
 	    videos.forEach(function (el) {
@@ -70,7 +90,7 @@
 	      }
 	    });
 	  }
-	
+	  //выравнивает элементы
 	  function align(arr) {
 	    var iteration = 0;
 	    var step = 0;
@@ -81,6 +101,7 @@
 	      if (iteration > 3) {
 	        return;
 	      }
+	
 	      el.style.left = 0 + step;
 	      el.style.transform = "scale(" + scaleStep + ")";
 	      el.style.zIndex = 0 - zIndexStep;
@@ -131,14 +152,19 @@
 	  }
 	
 	  function push(direction) {
+	    checkStop();
 	    if (direction >= 0) {
 	      curVideo.classList.remove("push-back");
 	      curVideo.classList.add("push-forward");
-	      curVideo.style.zIndex = 99;
+	      curVideo.style.zIndex = 9999;
+	      libIteration = libIteration + 1;
 	      recount("forward");
 	      back.classList.remove("block-btn");
 	      normalizeForward();
 	    } else {
+	      suspendIndex();
+	      curVideo.style.zIndex = 999;
+	      libIteration = libIteration - 2;
 	      recount("back");
 	      curVideo.classList.remove("push-forward");
 	      curVideo.classList.add("push-back");
