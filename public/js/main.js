@@ -58,16 +58,49 @@
 	  var videos = document.querySelectorAll(".video");
 	  var activeId = 0;
 	  var curVideo = videos[activeId];
-	  var nextVideo = videos[activeId + 1];
+	
 	  //make back btn initially unclickable
 	  var back = document.querySelector(".wrap_controls-left");
 	  back.classList.add("block-btn");
+	  //строит элементы один за другим туда сюда
+	  function clear() {
+	    videos.forEach(function (el) {
+	      console.log(el);
+	      if ($(el).hasClass("push-back")) {
+	        el.classList.remove("push-back");
+	      }
+	    });
+	  }
 	
-	  function normalizeBackwards() {}
-	
-	  function normalizeForward() {
+	  function align(arr) {
 	    var step = 0;
 	    var scaleStep = 1;
+	    var zIndexStep = 1;
+	
+	    arr.forEach(function (el) {
+	      el.style.left = 0 + step;
+	      el.style.transform = "scale(" + scaleStep + ")";
+	      el.style.zIndex = 0 - zIndexStep;
+	      zIndexStep = zIndexStep + 1;
+	      step = step + 75;
+	      scaleStep = scaleStep - 0.1;
+	    });
+	  }
+	  //выбираем элементы для построения
+	  function normalizeBackwards() {
+	    var alined = [];
+	
+	    videos.forEach(function (el) {
+	      if (!$(el).hasClass("push-forward")) {
+	        alined.push(el);
+	      }
+	    });
+	
+	    align(alined);
+	    clear();
+	  }
+	
+	  function normalizeForward() {
 	    var leftEl = [];
 	
 	    videos.forEach(function (el) {
@@ -76,12 +109,7 @@
 	      }
 	    });
 	
-	    leftEl.forEach(function (el) {
-	      el.style.left = 0 + step;
-	      el.style.transform = "scale(" + scaleStep + ")";
-	      step = step + 75;
-	      scaleStep = scaleStep - 0.1;
-	    });
+	    align(leftEl);
 	  }
 	
 	  function recount(type) {
@@ -101,6 +129,7 @@
 	    if (direction >= 0) {
 	      curVideo.classList.remove("push-back");
 	      curVideo.classList.add("push-forward");
+	      curVideo.style.zIndex = 99;
 	      recount("forward");
 	      back.classList.remove("block-btn");
 	      normalizeForward();
@@ -114,7 +143,6 @@
 	
 	  function prepare(el) {
 	    var eventType = el.target.dataset.dir;
-	
 	    switch (eventType) {
 	      case "right":
 	        push(-100);
