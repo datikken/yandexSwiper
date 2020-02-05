@@ -51,6 +51,19 @@ $(document).ready(function() {
       }
     });
   }
+  function stopVideo(item, type) {
+    if (item.nodeName === "VIDEO") {
+      if (type === "forward") {
+        let curVId = parseInt(item.getAttribute("data-id"));
+        let prevId = curVId - 1;
+        let prevVideo = videos[prevId];
+        
+        prevVideo.pause();
+      } else {
+        item.play();
+      }
+    }
+  }
   //выравнивает элементы
   function align(arr) {
     let iteration = 0;
@@ -133,6 +146,7 @@ $(document).ready(function() {
       recount("forward");
       back.classList.remove("block-btn");
       normalizeForward();
+      stopVideo(curVideo, "forward");
     } else {
       suspendIndex();
       curVideo.style.zIndex = 999;
@@ -140,6 +154,7 @@ $(document).ready(function() {
       curVideo.classList.remove("push-forward");
       curVideo.classList.add("push-back");
       normalizeBackwards();
+      stopVideo(curVideo, "back");
     }
 
     activeIndex();

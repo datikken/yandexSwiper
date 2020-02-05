@@ -105,6 +105,19 @@
 	      }
 	    });
 	  }
+	  function stopVideo(item, type) {
+	    if (item.nodeName === "VIDEO") {
+	      if (type === "forward") {
+	        var curVId = parseInt(item.getAttribute("data-id"));
+	        var prevId = curVId - 1;
+	        var prevVideo = videos[prevId];
+	
+	        prevVideo.pause();
+	      } else {
+	        item.play();
+	      }
+	    }
+	  }
 	  //выравнивает элементы
 	  function align(arr) {
 	    var iteration = 0;
@@ -187,6 +200,7 @@
 	      recount("forward");
 	      back.classList.remove("block-btn");
 	      normalizeForward();
+	      stopVideo(curVideo, "forward");
 	    } else {
 	      suspendIndex();
 	      curVideo.style.zIndex = 999;
@@ -194,6 +208,7 @@
 	      curVideo.classList.remove("push-forward");
 	      curVideo.classList.add("push-back");
 	      normalizeBackwards();
+	      stopVideo(curVideo, "back");
 	    }
 	
 	    activeIndex();
