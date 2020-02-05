@@ -9,7 +9,6 @@ $(document).ready(function() {
   //строит элементы один за другим туда сюда
   function clear() {
     videos.forEach(el => {
-      console.log(el);
       if ($(el).hasClass("push-back")) {
         el.classList.remove("push-back");
       }
@@ -17,17 +16,23 @@ $(document).ready(function() {
   }
 
   function align(arr) {
+    let iteration = 0;
     let step = 0;
     let scaleStep = 1;
     let zIndexStep = 1;
 
     arr.forEach(el => {
+      if(iteration > 3) {
+        return;
+      }
       el.style.left = 0 + step;
       el.style.transform = `scale(${scaleStep})`;
       el.style.zIndex = 0 - zIndexStep;
+
       zIndexStep = zIndexStep + 1;
       step = step + 75;
       scaleStep = scaleStep - 0.1;
+      iteration = iteration + 1;
     });
   }
   //выбираем элементы для построения
