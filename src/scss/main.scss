@@ -103,6 +103,7 @@ body {
 
 .push-forward {
   transform: scale(1) translate(-100%, 0) !important;
+  left: 0!important;
 }
 .push-back {
   transform: translate(0, 0);

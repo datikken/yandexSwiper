@@ -194,13 +194,10 @@ $(document).ready(function() {
     prepare(el);
     firstInit = false;
   });
+
   $(".wrap").on("click", function() {
       playPause();
   })
-
-  $(playBtn).on("click", function() {
-      playPause();
-  });
 
 });
 
