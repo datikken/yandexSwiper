@@ -24,7 +24,7 @@ body {
       height: 40px;
       width: 40px;
       position: absolute;
-      top: 55%;
+      top: 45%;
       z-index: 9999;
       transform: translate(-50%, 0);
       cursor: pointer;
@@ -44,6 +44,8 @@ body {
     top: 0;
     left: 0;
     transition: left 0.25s ease;
+    width: 836px;
+    height: 398px;
 
     &:first-child {
       z-index: 0;

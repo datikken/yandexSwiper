@@ -21,7 +21,7 @@ body {
       height: 40px;
       width: 40px;
       position: absolute;
-      top: 55%;
+      top: 45%;
       z-index: 9999;
       -ms-transform: translate(-50%, 0);
           transform: translate(-50%, 0);
@@ -36,7 +36,9 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    transition: left 0.25s ease; }
+    transition: left 0.25s ease;
+    width: 836px;
+    height: 398px; }
     .wrap .video:first-child {
       z-index: 0; }
     .wrap .video:nth-child(2) {
