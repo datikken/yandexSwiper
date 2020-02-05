@@ -88,7 +88,9 @@
 	  function suspendIndex() {
 	    videos.forEach(function (el) {
 	      if ($(el).hasClass("push-forward")) {
-	        el.style.zIndex = -9999;
+	        // el.style.zIndex = -9999;
+	
+	
 	      }
 	    });
 	  }
@@ -203,19 +205,19 @@
 	    if (direction >= 0) {
 	      curVideo.classList.remove("push-back");
 	      curVideo.classList.add("push-forward");
-	      curVideo.style.zIndex = 9999;
+	      // curVideo.style.zIndex = 9999;
 	      recount("forward");
 	      back.classList.remove("block-btn");
 	      normalizeForward();
-	      stopAndPlay(curVideo, "forward");
+	      stopAndPlay(curVideo, 'forward');
 	    } else {
 	      suspendIndex();
-	      curVideo.style.zIndex = 999;
+	      // curVideo.style.zIndex = 999;
 	      recount("back");
 	      curVideo.classList.remove("push-forward");
 	      curVideo.classList.add("push-back");
 	      normalizeBackwards();
-	      stopAndPlay(curVideo, "back");
+	      stopAndPlay(curVideo, 'back');
 	    }
 	
 	    activeIndex();
@@ -253,15 +255,6 @@
 	    playPause();
 	  });
 	});
-	
-	// class CustomPlayer {
-	//   constructor() {
-	//     this.back = document.querySelector(".wrap_controls-left");
-	//     this.forward = document.querySelector(".wrap_controls-right");
-	//     this.videos = document.querySelectorAll(".video");
-	//     this.firstVideo = document.querySelector(".active_slide");
-	//   }
-	// }
 
 /***/ }),
 /* 2 */
