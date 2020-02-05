@@ -3,17 +3,15 @@ body {
   background: black;
 }
 
-h1 {
-  color: rebeccapurple;
-}
-
 .wrap {
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 400px;
-  width: 900px;
+  min-height: 398px;
+  min-width: 836px;
+  width: 836px;
+  height: 398px;
 
   .wrap_controls {
     width: 100%;
@@ -37,7 +35,7 @@ h1 {
     }
     &-right {
       background-image: url("../img/right.svg");
-      right: 3rem;
+      right: -1.5rem;
     }
   }
 
@@ -45,7 +43,7 @@ h1 {
     position: absolute;
     top: 0;
     left: 0;
-    transition: left, transform 0.5s;
+    transition: left 0.25s ease;
 
     &:first-child {
       z-index: 0;
@@ -72,7 +70,7 @@ h1 {
 }
 
 .push-forward {
-  transform: scale(1) translate(-110%, 0)!important;
+  transform: scale(1) translate(-110%, 0) !important;
 }
 .push-back {
   transform: translate(0, 0);

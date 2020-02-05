@@ -79,8 +79,7 @@
 	    } else {
 	      forward.classList.remove("block-btn");
 	    }
-	    // console.log('active',activeId)
-	    // console.log('last',lastVideoId)
+	
 	    return activeId;
 	  }
 	  //возвращаем элемент по верху всех остальных элементов
@@ -119,19 +118,20 @@
 	      if (iteration > videosLength) {
 	        return;
 	      }
-	      if (iteration > 3) {
-	        return;
-	      }
+	
 	      if (iteration === 0) {
 	        el.classList.add("active_slide");
 	      }
 	
 	      activeSlideIter = activeSlideIter + 1;
+	      el.style.zIndex = 0 - zIndexStep;
+	      el.style.transform = "scale(" + scaleStep + ")";
+	
+	      if (iteration > 3) {
+	        return;
+	      }
 	
 	      el.style.left = 0 + step;
-	      el.style.transform = "scale(" + scaleStep + ")";
-	      el.style.zIndex = 0 - zIndexStep;
-	
 	      zIndexStep = zIndexStep + 1;
 	      step = step + 75;
 	      scaleStep = scaleStep - 0.1;
