@@ -13,9 +13,17 @@ body {
   width: 800px;
   height: 398px;
 
-  // &:hover .video-icon {
-  //     opacity: 1;
-  // }
+  &:hover .video {
+    &:nth-child(2) {
+      left: 75px;
+    }
+    &:nth-child(3) {
+      left: 150px;
+    }
+    &:nth-child(4) {
+      left: 225px;
+    }
+  }
 
   .video-icon {
     position: absolute;
@@ -24,9 +32,9 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
-    transition: opacity .1s;
+    transition: opacity 0.1s;
     opacity: 1;
-  
+
     &:after {
       content: "";
       display: block;
@@ -80,21 +88,18 @@ body {
     &:first-child {
       z-index: 0;
     }
-
     &:nth-child(2) {
-      left: 75px;
+      left: 60px;
       z-index: -1;
       transform: scale(0.9);
     }
-
     &:nth-child(3) {
-      left: 150px;
+      left: 125px;
       z-index: -2;
       transform: scale(0.8);
     }
-
     &:nth-child(4) {
-      left: 225px;
+      left: 180px;
       z-index: -3;
       transform: scale(0.7);
     }
@@ -103,7 +108,7 @@ body {
 
 .push-forward {
   transform: scale(1) translate(-100%, 0) !important;
-  left: 0!important;
+  left: 0 !important;
 }
 .push-back {
   transform: translate(0, 0);

@@ -12,6 +12,12 @@ body {
   min-width: 800px;
   width: 800px;
   height: 398px; }
+  .wrap:hover .video:nth-child(2) {
+    left: 75px; }
+  .wrap:hover .video:nth-child(3) {
+    left: 150px; }
+  .wrap:hover .video:nth-child(4) {
+    left: 225px; }
   .wrap .video-icon {
     position: absolute;
     z-index: 999999;
@@ -20,7 +26,7 @@ body {
     -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
     cursor: pointer;
-    transition: opacity .1s;
+    transition: opacity 0.1s;
     opacity: 1; }
     .wrap .video-icon:after {
       content: "";
@@ -66,17 +72,17 @@ body {
     .wrap .video:first-child {
       z-index: 0; }
     .wrap .video:nth-child(2) {
-      left: 75px;
+      left: 60px;
       z-index: -1;
       -ms-transform: scale(0.9);
           transform: scale(0.9); }
     .wrap .video:nth-child(3) {
-      left: 150px;
+      left: 125px;
       z-index: -2;
       -ms-transform: scale(0.8);
           transform: scale(0.8); }
     .wrap .video:nth-child(4) {
-      left: 225px;
+      left: 180px;
       z-index: -3;
       -ms-transform: scale(0.7);
           transform: scale(0.7); }
