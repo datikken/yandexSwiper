@@ -2,14 +2,15 @@ $(document).ready(function() {
   let back = document.querySelector(".wrap_controls-left");
   let forward = document.querySelector(".wrap_controls-right");
   let videos = document.querySelectorAll(".video");
-  let firstVideo = document.querySelector(".active_slide");
-
-  let firstInit = true;
+  let playBtn = document.querySelector(".video-icon");
   let activeId = 0;
   let curVideo = videos[activeId];
   let videosLength = videos.length;
+  let firstInit;
 
-  videos[0].classList.add("active_slide");
+  let state = null;
+
+  videos[videos.length - 1].classList.add("active_slide");
   back.classList.add("block-btn");
 
   function activeIndex() {
@@ -17,7 +18,7 @@ $(document).ready(function() {
     let activeId = document
       .querySelector(".active_slide")
       .getAttribute("data-id");
-    
+
     if (parseInt(activeId) === 0) {
       back.classList.add("block-btn");
     }
@@ -63,7 +64,7 @@ $(document).ready(function() {
         }
       });
     }
-    if(type === 'back') {
+    if (type === "back") {
       item.controls = true;
       item.play();
     } else {
@@ -143,7 +144,6 @@ $(document).ready(function() {
   }
 
   function push(direction) {
-
     clearActiveSlide();
 
     if (direction >= 0) {
@@ -153,7 +153,7 @@ $(document).ready(function() {
       recount("forward");
       back.classList.remove("block-btn");
       normalizeForward();
-      stopAndPlay(curVideo,'forward');
+      stopAndPlay(curVideo, "forward");
     } else {
       suspendIndex();
       curVideo.style.zIndex = 999;
@@ -161,7 +161,7 @@ $(document).ready(function() {
       curVideo.classList.remove("push-forward");
       curVideo.classList.add("push-back");
       normalizeBackwards();
-      stopAndPlay(curVideo,'back');
+      stopAndPlay(curVideo, "back");
     }
 
     activeIndex();
@@ -183,14 +183,22 @@ $(document).ready(function() {
     prepare(el);
     firstInit = false;
   });
+
+  $(playBtn).on("click", function() {
+    let video = document.querySelector(".active_slide");
+    if (!video.paused) {
+      video.pause();
+    } else {
+      video.play();
+    }
+  });
 });
 
-
-class CustomPlayer {
-  constructor() {
-    this.back = document.querySelector(".wrap_controls-left");
-    this.forward = document.querySelector(".wrap_controls-right");
-    this.videos = document.querySelectorAll(".video");
-    this.firstVideo = document.querySelector(".active_slide");
-  }
-}
+// class CustomPlayer {
+//   constructor() {
+//     this.back = document.querySelector(".wrap_controls-left");
+//     this.forward = document.querySelector(".wrap_controls-right");
+//     this.videos = document.querySelectorAll(".video");
+//     this.firstVideo = document.querySelector(".active_slide");
+//   }
+// }

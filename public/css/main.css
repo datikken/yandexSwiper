@@ -12,6 +12,28 @@ body {
   min-width: 800px;
   width: 800px;
   height: 398px; }
+  .wrap:hover .video-icon {
+    opacity: 1; }
+  .wrap .video-icon {
+    position: absolute;
+    z-index: 999999;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: opacity .1s;
+    opacity: 0; }
+    .wrap .video-icon:after {
+      content: "";
+      display: block;
+      background-size: contain;
+      background-position: top;
+      background-image: url("/img/playBtn.svg");
+      background-repeat: no-repeat;
+      width: 87.82px;
+      height: 87.82px;
+      z-index: 999; }
   .wrap .wrap_controls {
     width: 80%;
     height: 100%;

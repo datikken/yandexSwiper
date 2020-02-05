@@ -54,20 +54,19 @@
 
 	"use strict";
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
 	$(document).ready(function () {
 	  var back = document.querySelector(".wrap_controls-left");
 	  var forward = document.querySelector(".wrap_controls-right");
 	  var videos = document.querySelectorAll(".video");
-	  var firstVideo = document.querySelector(".active_slide");
-	
-	  var firstInit = true;
+	  var playBtn = document.querySelector(".video-icon");
 	  var activeId = 0;
 	  var curVideo = videos[activeId];
 	  var videosLength = videos.length;
+	  var firstInit = void 0;
 	
-	  videos[0].classList.add("active_slide");
+	  var state = null;
+	
+	  videos[videos.length - 1].classList.add("active_slide");
 	  back.classList.add("block-btn");
 	
 	  function activeIndex() {
@@ -119,7 +118,7 @@
 	        }
 	      });
 	    }
-	    if (type === 'back') {
+	    if (type === "back") {
 	      item.controls = true;
 	      item.play();
 	    } else {
@@ -199,7 +198,6 @@
 	  }
 	
 	  function push(direction) {
-	
 	    clearActiveSlide();
 	
 	    if (direction >= 0) {
@@ -209,7 +207,7 @@
 	      recount("forward");
 	      back.classList.remove("block-btn");
 	      normalizeForward();
-	      stopAndPlay(curVideo, 'forward');
+	      stopAndPlay(curVideo, "forward");
 	    } else {
 	      suspendIndex();
 	      curVideo.style.zIndex = 999;
@@ -217,7 +215,7 @@
 	      curVideo.classList.remove("push-forward");
 	      curVideo.classList.add("push-back");
 	      normalizeBackwards();
-	      stopAndPlay(curVideo, 'back');
+	      stopAndPlay(curVideo, "back");
 	    }
 	
 	    activeIndex();
@@ -239,16 +237,25 @@
 	    prepare(el);
 	    firstInit = false;
 	  });
+	
+	  $(playBtn).on("click", function () {
+	    var video = document.querySelector(".active_slide");
+	    if (!video.paused) {
+	      video.pause();
+	    } else {
+	      video.play();
+	    }
+	  });
 	});
 	
-	var CustomPlayer = function CustomPlayer() {
-	  _classCallCheck(this, CustomPlayer);
-	
-	  this.back = document.querySelector(".wrap_controls-left");
-	  this.forward = document.querySelector(".wrap_controls-right");
-	  this.videos = document.querySelectorAll(".video");
-	  this.firstVideo = document.querySelector(".active_slide");
-	};
+	// class CustomPlayer {
+	//   constructor() {
+	//     this.back = document.querySelector(".wrap_controls-left");
+	//     this.forward = document.querySelector(".wrap_controls-right");
+	//     this.videos = document.querySelectorAll(".video");
+	//     this.firstVideo = document.querySelector(".active_slide");
+	//   }
+	// }
 
 /***/ }),
 /* 2 */
