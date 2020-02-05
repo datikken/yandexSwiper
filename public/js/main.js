@@ -55,24 +55,33 @@
 	"use strict";
 	
 	$(document).ready(function () {
-	  var libIteration = 2;
+	  var back = document.querySelector(".wrap_controls-left");
+	  var forward = document.querySelector(".wrap_controls-right");
 	  var videos = document.querySelectorAll(".video");
+	
 	  var activeId = 0;
 	  var curVideo = videos[activeId];
 	  var videosLength = videos.length;
-	  //make back btn initially unclickable
-	  var back = document.querySelector(".wrap_controls-left");
-	  var forward = document.querySelector(".wrap_controls-right");
 	
+	  videos[0].classList.add("active_slide");
 	  back.classList.add("block-btn");
 	
-	  function checkStop() {
-	    if (libIteration >= videosLength) {
+	  function activeIndex() {
+	    var lastVideoId = videos[videos.length - 1].getAttribute("data-id");
+	    var activeId = document.querySelector(".active_slide").getAttribute("data-id");
+	
+	    if (parseInt(activeId) === 0) {
+	      back.classList.add("block-btn");
+	    }
+	
+	    if (parseInt(lastVideoId) === parseInt(activeId)) {
 	      forward.classList.add("block-btn");
-	      return;
 	    } else {
 	      forward.classList.remove("block-btn");
 	    }
+	    // console.log('active',activeId)
+	    // console.log('last',lastVideoId)
+	    return activeId;
 	  }
 	  //возвращаем элемент по верху всех остальных элементов
 	  function suspendIndex() {
@@ -83,6 +92,13 @@
 	    });
 	  }
 	  //строит элементы один за другим туда сюда
+	  function clearActiveSlide() {
+	    videos.forEach(function (el) {
+	      if ($(el).hasClass("active_slide")) {
+	        el.classList.remove("active_slide");
+	      }
+	    });
+	  }
 	  function clear() {
 	    videos.forEach(function (el) {
 	      if ($(el).hasClass("push-back")) {
@@ -98,9 +114,19 @@
 	    var zIndexStep = 1;
 	
 	    arr.forEach(function (el) {
+	      var activeSlideIter = 0;
+	
+	      if (iteration > videosLength) {
+	        return;
+	      }
 	      if (iteration > 3) {
 	        return;
 	      }
+	      if (iteration === 0) {
+	        el.classList.add("active_slide");
+	      }
+	
+	      activeSlideIter = activeSlideIter + 1;
 	
 	      el.style.left = 0 + step;
 	      el.style.transform = "scale(" + scaleStep + ")";
@@ -152,24 +178,25 @@
 	  }
 	
 	  function push(direction) {
-	    checkStop();
+	    clearActiveSlide();
+	
 	    if (direction >= 0) {
 	      curVideo.classList.remove("push-back");
 	      curVideo.classList.add("push-forward");
 	      curVideo.style.zIndex = 9999;
-	      libIteration = libIteration + 1;
 	      recount("forward");
 	      back.classList.remove("block-btn");
 	      normalizeForward();
 	    } else {
 	      suspendIndex();
 	      curVideo.style.zIndex = 999;
-	      libIteration = libIteration - 2;
 	      recount("back");
 	      curVideo.classList.remove("push-forward");
 	      curVideo.classList.add("push-back");
 	      normalizeBackwards();
 	    }
+	
+	    activeIndex();
 	  }
 	
 	  function prepare(el) {

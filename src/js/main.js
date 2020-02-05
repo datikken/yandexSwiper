@@ -1,22 +1,33 @@
 $(document).ready(function() {
-  let libIteration = 2;
+  let back = document.querySelector(".wrap_controls-left");
+  let forward = document.querySelector(".wrap_controls-right");
   let videos = document.querySelectorAll(".video");
+
   let activeId = 0;
   let curVideo = videos[activeId];
   let videosLength = videos.length;
-  //make back btn initially unclickable
-  let back = document.querySelector(".wrap_controls-left");
-  let forward = document.querySelector(".wrap_controls-right");
 
+  videos[0].classList.add("active_slide");
   back.classList.add("block-btn");
 
-  function checkStop() {
-    if (libIteration >= videosLength) {
+  function activeIndex() {
+    let lastVideoId = videos[videos.length - 1].getAttribute("data-id");
+    let activeId = document
+      .querySelector(".active_slide")
+      .getAttribute("data-id");
+
+    if (parseInt(activeId) === 0) {
+      back.classList.add("block-btn");
+    }
+
+    if (parseInt(lastVideoId) === parseInt(activeId)) {
       forward.classList.add("block-btn");
-      return;
     } else {
       forward.classList.remove("block-btn");
     }
+    // console.log('active',activeId)
+    // console.log('last',lastVideoId)
+    return activeId;
   }
   //возвращаем элемент по верху всех остальных элементов
   function suspendIndex() {
@@ -27,6 +38,13 @@ $(document).ready(function() {
     });
   }
   //строит элементы один за другим туда сюда
+  function clearActiveSlide() {
+    videos.forEach(el => {
+      if ($(el).hasClass("active_slide")) {
+        el.classList.remove("active_slide");
+      }
+    });
+  }
   function clear() {
     videos.forEach(el => {
       if ($(el).hasClass("push-back")) {
@@ -42,9 +60,19 @@ $(document).ready(function() {
     let zIndexStep = 1;
 
     arr.forEach(el => {
+      let activeSlideIter = 0;
+
+      if (iteration > videosLength) {
+        return;
+      }
       if (iteration > 3) {
         return;
       }
+      if (iteration === 0) {
+        el.classList.add("active_slide");
+      }
+
+      activeSlideIter = activeSlideIter + 1;
 
       el.style.left = 0 + step;
       el.style.transform = `scale(${scaleStep})`;
@@ -96,24 +124,25 @@ $(document).ready(function() {
   }
 
   function push(direction) {
-    checkStop();
+    clearActiveSlide();
+
     if (direction >= 0) {
       curVideo.classList.remove("push-back");
       curVideo.classList.add("push-forward");
       curVideo.style.zIndex = 9999;
-      libIteration = libIteration + 1;
       recount("forward");
       back.classList.remove("block-btn");
       normalizeForward();
     } else {
       suspendIndex();
       curVideo.style.zIndex = 999;
-      libIteration = libIteration - 2;
       recount("back");
       curVideo.classList.remove("push-forward");
       curVideo.classList.add("push-back");
       normalizeBackwards();
     }
+
+    activeIndex();
   }
 
   function prepare(el) {
