@@ -41,7 +41,8 @@ body {
     left: 0;
     transition: left 0.25s ease;
     width: 800px;
-    height: 398px; }
+    height: 398px;
+    outline: none; }
     .wrap .video:first-child {
       z-index: 0; }
     .wrap .video:nth-child(2) {

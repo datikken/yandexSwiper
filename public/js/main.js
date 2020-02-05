@@ -61,6 +61,7 @@
 	  var forward = document.querySelector(".wrap_controls-right");
 	  var videos = document.querySelectorAll(".video");
 	  var firstVideo = document.querySelector(".active_slide");
+	
 	  var firstInit = true;
 	  var activeId = 0;
 	  var curVideo = videos[activeId];
@@ -76,11 +77,6 @@
 	    if (parseInt(activeId) === 0) {
 	      back.classList.add("block-btn");
 	    }
-	
-	    // if(!firstInit) {
-	    //   back.classList.remove("block-btn");
-	    // }
-	
 	    if (parseInt(lastVideoId) === parseInt(activeId)) {
 	      forward.classList.add("block-btn");
 	    } else {
@@ -127,8 +123,8 @@
 	      item.controls = true;
 	      item.play();
 	    } else {
-	      item.controls = false;
-	      item.pause();
+	      item.controls = true;
+	      item.play();
 	    }
 	  }
 	  //выравнивает элементы
