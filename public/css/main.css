@@ -14,6 +14,7 @@ body {
   height: 398px; }
   .wrap .video-icon {
     position: absolute;
+    z-index: 999999;
     top: 50%;
     left: 50%;
     -ms-transform: translate(-50%, -50%);
