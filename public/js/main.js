@@ -148,14 +148,18 @@
 	
 	    arr.forEach(function (el) {
 	      var activeSlideIter = 0;
-	
 	      if (iteration > videosLength) {
 	        return;
 	      }
 	      if (iteration === 0) {
 	        el.classList.add("active_slide");
 	      }
-	
+	      if (el.classList.value.indexOf("raiseZindex") > 0) {
+	        el.classList.remove("raiseZindex");
+	      }
+	      if (el.classList.value.indexOf("dropZindex") > 0) {
+	        el.classList.remove("dropZindex");
+	      }
 	      activeSlideIter = activeSlideIter + 1;
 	      el.style.zIndex = 0 - zIndexStep;
 	      el.style.transform = "scale(" + scaleStep + ")";
