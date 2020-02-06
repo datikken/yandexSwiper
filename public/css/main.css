@@ -8,10 +8,8 @@ body {
   left: 50%;
   -ms-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
-  min-height: 398px;
-  min-width: 800px;
   width: 800px;
-  height: 398px; }
+  height: 450px; }
   .wrap .video-icon {
     position: absolute;
     z-index: 999999;
@@ -33,7 +31,7 @@ body {
       height: 87.82px;
       z-index: 999; }
   .wrap .wrap_controls {
-    width: 80%;
+    width: 90%;
     height: 100%;
     position: relative;
     z-index: 9999;
@@ -61,7 +59,7 @@ body {
     left: 0;
     transition: all 0.2s ease;
     width: 800px;
-    height: 398px;
+    height: 450px;
     outline: none;
     z-index: 0; }
     .wrap .video:first-child {
@@ -83,8 +81,8 @@ body {
           transform: scale(0.7); }
 
 .push-forward {
-  -ms-transform: scale(1) translate(-100%, 0) !important;
-      transform: scale(1) translate(-100%, 0) !important;
+  -ms-transform: scale(1) translate(-110%, 0) !important;
+      transform: scale(1) translate(-110%, 0) !important;
   left: 0 !important; }
 
 .push-back {
