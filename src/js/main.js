@@ -12,7 +12,6 @@ $(document).ready(function() {
   videos[videos.length - 1].classList.add("active_slide");
   back.classList.add("block-btn");
 
-  //controller
   back.addEventListener('click', function() {
     push(-100);
   });
@@ -106,14 +105,15 @@ $(document).ready(function() {
         return;
       }
       if (iteration === 0) {
-        el.classList.add("active_slide");
+        _classesHandler(el, "active_slide", 'add');
       }
       if (el.classList.value.indexOf("raiseZindex") > 0) {
-        el.classList.remove("raiseZindex");
+        _classesHandler(el, "raiseZindex", 'remove');
       }
       if (el.classList.value.indexOf("dropZindex") > 0) {
-        el.classList.remove("dropZindex");
+        _classesHandler(el, "dropZindex", 'remove');
       }
+
       activeSlideIter = activeSlideIter + 1;
       el.style.zIndex = 0 - zIndexStep;
       el.style.transform = `scale(${scaleStep})`;
@@ -128,6 +128,14 @@ $(document).ready(function() {
       scaleStep = scaleStep - 0.1;
       iteration = iteration + 1;
     });
+  }
+
+  function _classesHandler(el, elClass, type) {
+      if(type == 'add') {
+          el.classList.add(elClass);
+      } else {
+          el.classList.remove(elClass);
+      }
   }
   //выбираем элементы для построения
   function normalizeBackwards() {
@@ -145,7 +153,6 @@ $(document).ready(function() {
 
   function normalizeForward() {
     let leftEl = [];
-
     videos.forEach(el => {
       if (el.classList.value.indexOf("push") < 0) {
         leftEl.push(el);
@@ -173,22 +180,22 @@ $(document).ready(function() {
 
     if (direction >= 0) {
       _dropZindex();
-
-      curVideo.classList.remove("push-back");
-      curVideo.classList.add("push-forward");
-      back.classList.remove("block-btn");
+      _classesHandler(curVideo, "push-back", 'remove');
+      _classesHandler(curVideo, "push-forward", 'add');
+      _classesHandler(back, "block-btn", 'remove');
 
       curVideo.style.zIndex = 99;
 
       recount("forward");
       normalizeForward();
       stopAndPlay(curVideo, "forward");
+
     } else {
       _raiseZindex();
       recount("back");
 
-      curVideo.classList.remove("push-forward");
-      curVideo.classList.add("push-back");
+      _classesHandler(curVideo, "push-forward", 'remove');
+      _classesHandler(curVideo, "push-back", 'add');
 
       normalizeBackwards();
       stopAndPlay(curVideo, "back");
