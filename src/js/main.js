@@ -1,17 +1,27 @@
 $(document).ready(function() {
-  let back = document.querySelector(".wrap_controls-left");
-  let forward = document.querySelector(".wrap_controls-right");
-  let videos = document.querySelectorAll(".video");
-  let playBtn = document.querySelector(".video-icon");
+  let wrap = document.querySelector(".wrap");
+  let back = wrap.querySelector(".wrap_controls-left");
+  let forward = wrap.querySelector(".wrap_controls-right");
+  let videos = wrap.querySelectorAll(".video");
+  let playBtn = wrap.querySelector(".video-icon");
 
   let activeId = 0;
   let curVideo = videos[activeId];
   let videosLength = videos.length;
-  let firstInit;
-  let state = null;
 
   videos[videos.length - 1].classList.add("active_slide");
   back.classList.add("block-btn");
+
+  //controller
+  back.addEventListener('click', function() {
+    push(-100);
+  });
+  forward.addEventListener('click', function() {
+    push(0);
+  });
+  wrap.addEventListener("click", function() {
+    playPause();
+  });
 
   function activeIndex() {
     let lastVideoId = videos[videos.length - 1].getAttribute("data-id");
@@ -32,8 +42,7 @@ $(document).ready(function() {
   }
   //возвращаем элемент по верху всех остальных элементов
   function _raiseZindex() {
-    let pushedArr = [];
-    let pushedItems = document.querySelectorAll(".push-forward");
+    let pushedItems = wrap.querySelectorAll(".push-forward");
 
     if (pushedItems.length) {
       pushedItems.forEach(el => {
@@ -42,8 +51,7 @@ $(document).ready(function() {
     }
   }
   function _dropZindex() {
-    let pushedArr = [];
-    let pushedItems = document.querySelectorAll(".push-forward");
+    let pushedItems = wrap.querySelectorAll(".push-forward");
 
     if (pushedItems.length) {
       pushedItems.forEach(el => {
@@ -161,30 +169,35 @@ $(document).ready(function() {
   }
 
   function push(direction) {
-    clearActiveSlide();
+      clearActiveSlide();
 
     if (direction >= 0) {
       _dropZindex();
+
       curVideo.classList.remove("push-back");
       curVideo.classList.add("push-forward");
-      curVideo.style.zIndex = 99;
-      recount("forward");
       back.classList.remove("block-btn");
+
+      curVideo.style.zIndex = 99;
+
+      recount("forward");
       normalizeForward();
       stopAndPlay(curVideo, "forward");
     } else {
       _raiseZindex();
       recount("back");
+
       curVideo.classList.remove("push-forward");
       curVideo.classList.add("push-back");
+
       normalizeBackwards();
       stopAndPlay(curVideo, "back");
     }
-    
+
     activeIndex();
   }
   function playPause() {
-    let video = document.querySelector(".active_slide");
+    let video = wrap.querySelector(".active_slide");
     if (!video.paused) {
       video.pause();
       playBtn.style.opacity = 1;
@@ -193,25 +206,4 @@ $(document).ready(function() {
       playBtn.style.opacity = 0;
     }
   }
-
-  function prepare(el) {
-    let eventType = el.target.dataset.dir;
-    switch (eventType) {
-      case "right":
-        push(-100);
-        break;
-      case "left":
-        push(0);
-        break;
-    }
-  }
-  //controller
-  $(".wrap_controls-control").on("click", function(el) {
-    prepare(el);
-    firstInit = false;
-  });
-
-  $(".wrap").on("click", function() {
-    playPause();
-  });
 });
