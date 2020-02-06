@@ -165,7 +165,6 @@ $(document).ready(function() {
 
     if (direction >= 0) {
       _dropZindex();
-      // suspendIndex();
       curVideo.classList.remove("push-back");
       curVideo.classList.add("push-forward");
       curVideo.style.zIndex = 99;
@@ -181,6 +180,7 @@ $(document).ready(function() {
       normalizeBackwards();
       stopAndPlay(curVideo, "back");
     }
+    
     activeIndex();
   }
   function playPause() {
