@@ -59,11 +59,11 @@
 	  var forward = document.querySelector(".wrap_controls-right");
 	  var videos = document.querySelectorAll(".video");
 	  var playBtn = document.querySelector(".video-icon");
+	
 	  var activeId = 0;
 	  var curVideo = videos[activeId];
 	  var videosLength = videos.length;
 	  var firstInit = void 0;
-	
 	  var state = null;
 	
 	  videos[videos.length - 1].classList.add("active_slide");
@@ -85,12 +85,25 @@
 	    return activeId;
 	  }
 	  //возвращаем элемент по верху всех остальных элементов
-	  function suspendIndex() {
-	    videos.forEach(function (el) {
-	      if ($(el).hasClass("push-forward")) {
-	        el.style.zIndex = -9999;
-	      }
-	    });
+	  function _raiseZindex() {
+	    var pushedArr = [];
+	    var pushedItems = document.querySelectorAll(".push-forward");
+	
+	    if (pushedItems.length) {
+	      pushedItems.forEach(function (el) {
+	        el.classList.add("raiseZindex");
+	      });
+	    }
+	  }
+	  function _dropZindex() {
+	    var pushedArr = [];
+	    var pushedItems = document.querySelectorAll(".push-forward");
+	
+	    if (pushedItems.length) {
+	      pushedItems.forEach(function (el) {
+	        el.classList.add("dropZindex");
+	      });
+	    }
 	  }
 	  //строит элементы один за другим туда сюда
 	  function clearActiveSlide() {
@@ -199,18 +212,24 @@
 	
 	  function push(direction) {
 	    clearActiveSlide();
+	
 	    if (direction >= 0) {
+	      _dropZindex();
+	      // suspendIndex();
 	      curVideo.classList.remove("push-back");
 	      curVideo.classList.add("push-forward");
 	      curVideo.style.zIndex = 99;
 	      recount("forward");
 	      back.classList.remove("block-btn");
 	      normalizeForward();
+	      stopAndPlay(curVideo, "forward");
 	    } else {
+	      _raiseZindex();
 	      recount("back");
 	      curVideo.classList.remove("push-forward");
 	      curVideo.classList.add("push-back");
 	      normalizeBackwards();
+	      stopAndPlay(curVideo, "back");
 	    }
 	    activeIndex();
 	  }

@@ -3,11 +3,11 @@ $(document).ready(function() {
   let forward = document.querySelector(".wrap_controls-right");
   let videos = document.querySelectorAll(".video");
   let playBtn = document.querySelector(".video-icon");
+
   let activeId = 0;
   let curVideo = videos[activeId];
   let videosLength = videos.length;
   let firstInit;
-
   let state = null;
 
   videos[videos.length - 1].classList.add("active_slide");
@@ -31,12 +31,25 @@ $(document).ready(function() {
     return activeId;
   }
   //возвращаем элемент по верху всех остальных элементов
-  function suspendIndex() {
-    videos.forEach(el => {
-      if ($(el).hasClass("push-forward")) {
-        el.style.zIndex = -9999;
-      }
-    });
+  function _raiseZindex() {
+    let pushedArr = [];
+    let pushedItems = document.querySelectorAll(".push-forward");
+
+    if (pushedItems.length) {
+      pushedItems.forEach(el => {
+        el.classList.add("raiseZindex");
+      });
+    }
+  }
+  function _dropZindex() {
+    let pushedArr = [];
+    let pushedItems = document.querySelectorAll(".push-forward");
+
+    if (pushedItems.length) {
+      pushedItems.forEach(el => {
+        el.classList.add("dropZindex");
+      });
+    }
   }
   //строит элементы один за другим туда сюда
   function clearActiveSlide() {
@@ -145,18 +158,24 @@ $(document).ready(function() {
 
   function push(direction) {
     clearActiveSlide();
+
     if (direction >= 0) {
+      _dropZindex();
+      // suspendIndex();
       curVideo.classList.remove("push-back");
       curVideo.classList.add("push-forward");
       curVideo.style.zIndex = 99;
       recount("forward");
       back.classList.remove("block-btn");
       normalizeForward();
+      stopAndPlay(curVideo, "forward");
     } else {
+      _raiseZindex();
       recount("back");
       curVideo.classList.remove("push-forward");
       curVideo.classList.add("push-back");
       normalizeBackwards();
+      stopAndPlay(curVideo, "back");
     }
     activeIndex();
   }

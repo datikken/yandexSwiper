@@ -94,4 +94,13 @@ body {
   pointer-events: none;
   opacity: 0.5; }
 
+.dropZindex {
+  z-index: -999999 !important; }
+
+.raiseZindex {
+  z-index: 0 !important; }
+
+.active_slide {
+  z-index: 9999 !important; }
+
 /*# sourceMappingURL=main.css.map*/
