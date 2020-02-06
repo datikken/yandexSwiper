@@ -27,14 +27,14 @@ body {
 
   .video-icon {
     position: absolute;
-    z-index: 999999;
+    // z-index: 999999;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
-    transition: opacity .1s;
+    transition: opacity 0.1s;
     opacity: 1;
-  
+
     &:after {
       content: "";
       display: block;
@@ -80,7 +80,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    transition: all 2s ease;
+    transition: all 0.2s ease;
     width: 800px;
     height: 398px;
     outline: none;
@@ -110,7 +110,7 @@ body {
 
 .push-forward {
   transform: scale(1) translate(-100%, 0) !important;
-  left: 0!important;
+  left: 0 !important;
 }
 .push-back {
   transform: translate(0, 0);

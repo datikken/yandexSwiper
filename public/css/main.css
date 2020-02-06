@@ -14,13 +14,12 @@ body {
   height: 398px; }
   .wrap .video-icon {
     position: absolute;
-    z-index: 999999;
     top: 50%;
     left: 50%;
     -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
     cursor: pointer;
-    transition: opacity .1s;
+    transition: opacity 0.1s;
     opacity: 1; }
     .wrap .video-icon:after {
       content: "";
@@ -59,7 +58,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    transition: all 2s ease;
+    transition: all 0.2s ease;
     width: 800px;
     height: 398px;
     outline: none;
