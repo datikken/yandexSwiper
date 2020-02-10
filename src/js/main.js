@@ -5,7 +5,6 @@
  * _classesHandler
  * el, class, action
  */
-import { hasClass } from "./functions/_hasClass";
 import { _classesHandler } from "./functions/_classesHandler";
 
 const videoSlider = function() {
@@ -44,13 +43,13 @@ const videoSlider = function() {
           _classesHandler(el, 'active_slide', 'remove');
         }
 
-        if(id === 5) {
+        if(id === itemsLength) {
           _classesHandler(el, 'push-forward', 'add');
         }
 
         el.style.zIndex = zVal;
        
-        TweenLite.to(el, .2, {left: leftVal, transform: `scale(${val})`});
+        TweenLite.to(el, .1, {ease: "sine.out", left: leftVal, transform: `scale(${val})`});
       });
   }
 
@@ -69,8 +68,6 @@ const videoSlider = function() {
   }
 
   function changeIndexes(type) {
-      let lastIndex = videos[videos.length-1].getAttribute('data-id');
-
       videos.forEach(el => {
         let id = parseInt(el.getAttribute('data-id'));
 

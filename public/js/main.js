@@ -59,17 +59,8 @@
 	});
 	exports.videoSlider = undefined;
 	
-	var _hasClass = __webpack_require__(2);
-	
 	var _classesHandler2 = __webpack_require__(3);
 	
-	/**
-	 * hasClass util
-	 * target, class
-	 * @returns {boolean}
-	 * _classesHandler
-	 * el, class, action
-	 */
 	var videoSlider = function videoSlider() {
 	  var wrap = document.querySelector(".wrap");
 	  var videos = wrap.querySelectorAll(".video");
@@ -106,13 +97,13 @@
 	        (0, _classesHandler2._classesHandler)(el, 'active_slide', 'remove');
 	      }
 	
-	      if (id === 5) {
+	      if (id === itemsLength) {
 	        (0, _classesHandler2._classesHandler)(el, 'push-forward', 'add');
 	      }
 	
 	      el.style.zIndex = zVal;
 	
-	      TweenLite.to(el, .2, { left: leftVal, transform: "scale(" + val + ")" });
+	      TweenLite.to(el, .1, { ease: "sine.out", left: leftVal, transform: "scale(" + val + ")" });
 	    });
 	  }
 	
@@ -131,8 +122,6 @@
 	  }
 	
 	  function changeIndexes(type) {
-	    var lastIndex = videos[videos.length - 1].getAttribute('data-id');
-	
 	    videos.forEach(function (el) {
 	      var id = parseInt(el.getAttribute('data-id'));
 	
@@ -152,7 +141,14 @@
 	  }
 	
 	  controller();
-	};
+	}; /**
+	    * hasClass util
+	    * target, class
+	    * @returns {boolean}
+	    * _classesHandler
+	    * el, class, action
+	    */
+	
 	
 	$(document).ready(function () {
 	  videoSlider();
@@ -161,21 +157,7 @@
 	exports.videoSlider = videoSlider;
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	function hasClass(target, className) {
-	  return new RegExp("(\\s|^)" + className + "(\\s|$)").test(target.className);
-	}
-	
-	exports.hasClass = hasClass;
-
-/***/ }),
+/* 2 */,
 /* 3 */
 /***/ (function(module, exports) {
 
