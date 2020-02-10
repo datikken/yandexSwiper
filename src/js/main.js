@@ -17,22 +17,22 @@ const videoSlider = function() {
   //autoplay
   let playBtn = wrap.querySelector(".topVideo-icon");
   //all vids length from 0
-  let itemsLength = videos.length -1;
+  let itemsLength = videos.length - 1;
 
   function controller() {
     _classesHandler(back, 'block-btn', 'add');
-
     recountStyles(videos);
     setEventListeners(back, forward);
   }
 
-  function recountStyles() {    
+  function recountStyles(items) {    
     let scaleStep = 1;
     let leftStep = 0;
     let zIndexStep = 0;
 
-    videos.forEach((el) => {
+    items.forEach((el) => {
         let id = parseInt(el.getAttribute('data-id'));
+        _classesHandler(el, 'push-forward', 'remove');
 
         let val = scaleStep - `.${id}`;
         let leftVal = leftStep + id * 75;
@@ -44,22 +44,26 @@ const videoSlider = function() {
           _classesHandler(el, 'active_slide', 'remove');
         }
 
-        el.style.zIndex = zVal;
+        if(id === 5) {
+          _classesHandler(el, 'push-forward', 'add');
+        }
 
+        el.style.zIndex = zVal;
+       
         TweenLite.to(el, .2, {left: leftVal, transform: `scale(${val})`});
       });
   }
 
   function setEventListeners(back, forward) {
     back.addEventListener("click", function() {
-      changeIndexes('forward');
+      changeIndexes('back');
       recountStyles(videos);
     });
 
     forward.addEventListener("click", function() {
       _classesHandler(back, 'block-btn', 'remove');
 
-      changeIndexes('back');
+      changeIndexes('forward');
       recountStyles(videos);
     });
   }
@@ -70,11 +74,13 @@ const videoSlider = function() {
       videos.forEach(el => {
         let id = parseInt(el.getAttribute('data-id'));
 
-        if(type === 'forward') {
+        if(type === 'back') {
           el.setAttribute('data-id', id + 1);
+
           if(id >= itemsLength) {
             el.setAttribute('data-id', 0)
           }
+
         } else {
           el.setAttribute('data-id', id - 1);
           if(id <= 0) {

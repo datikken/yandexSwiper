@@ -83,18 +83,18 @@
 	
 	  function controller() {
 	    (0, _classesHandler2._classesHandler)(back, 'block-btn', 'add');
-	
 	    recountStyles(videos);
 	    setEventListeners(back, forward);
 	  }
 	
-	  function recountStyles() {
+	  function recountStyles(items) {
 	    var scaleStep = 1;
 	    var leftStep = 0;
 	    var zIndexStep = 0;
 	
-	    videos.forEach(function (el) {
+	    items.forEach(function (el) {
 	      var id = parseInt(el.getAttribute('data-id'));
+	      (0, _classesHandler2._classesHandler)(el, 'push-forward', 'remove');
 	
 	      var val = scaleStep - ("." + id);
 	      var leftVal = leftStep + id * 75;
@@ -106,6 +106,10 @@
 	        (0, _classesHandler2._classesHandler)(el, 'active_slide', 'remove');
 	      }
 	
+	      if (id === 5) {
+	        (0, _classesHandler2._classesHandler)(el, 'push-forward', 'add');
+	      }
+	
 	      el.style.zIndex = zVal;
 	
 	      TweenLite.to(el, .2, { left: leftVal, transform: "scale(" + val + ")" });
@@ -114,14 +118,14 @@
 	
 	  function setEventListeners(back, forward) {
 	    back.addEventListener("click", function () {
-	      changeIndexes('forward');
+	      changeIndexes('back');
 	      recountStyles(videos);
 	    });
 	
 	    forward.addEventListener("click", function () {
 	      (0, _classesHandler2._classesHandler)(back, 'block-btn', 'remove');
 	
-	      changeIndexes('back');
+	      changeIndexes('forward');
 	      recountStyles(videos);
 	    });
 	  }
@@ -132,8 +136,9 @@
 	    videos.forEach(function (el) {
 	      var id = parseInt(el.getAttribute('data-id'));
 	
-	      if (type === 'forward') {
+	      if (type === 'back') {
 	        el.setAttribute('data-id', id + 1);
+	
 	        if (id >= itemsLength) {
 	          el.setAttribute('data-id', 0);
 	        }
