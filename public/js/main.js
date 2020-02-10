@@ -88,16 +88,16 @@
 	
 	  back.addEventListener("click", function () {
 	    push(-100);
-	    _headingChange(wrap);
-	    _setHref();
+	    // _headingChange(wrap);
+	    // _setHref();
 	  });
 	  forward.addEventListener("click", function () {
 	    push(0);
-	    _headingChange(wrap);
-	    _setHref();
+	    // _headingChange(wrap);
+	    // _setHref();
 	  });
 	  wrap.addEventListener("click", function () {
-	    playPause();
+	    // playPause();
 	  });
 	
 	  function _setHref() {
@@ -270,6 +270,7 @@
 	
 	    if (direction >= 0) {
 	      _dropZindex();
+	
 	      (0, _classesHandler2._classesHandler)(curVideo, "push-back", "remove");
 	      (0, _classesHandler2._classesHandler)(curVideo, "push-forward", "add");
 	      (0, _classesHandler2._classesHandler)(back, "block-btn", "remove");

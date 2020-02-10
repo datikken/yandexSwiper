@@ -26,16 +26,16 @@ const videoSlider = function() {
 
   back.addEventListener("click", function() {
     push(-100);
-    _headingChange(wrap);
-    _setHref();
+    // _headingChange(wrap);
+    // _setHref();
   });
   forward.addEventListener("click", function() {
     push(0);
-    _headingChange(wrap);
-    _setHref();
+    // _headingChange(wrap);
+    // _setHref();
   });
   wrap.addEventListener("click", function() {
-    playPause();
+    // playPause();
   });
 
   function _setHref() {
@@ -212,6 +212,7 @@ const videoSlider = function() {
 
     if (direction >= 0) {
       _dropZindex();
+      
       _classesHandler(curVideo, "push-back", "remove");
       _classesHandler(curVideo, "push-forward", "add");
       _classesHandler(back, "block-btn", "remove");
@@ -221,6 +222,7 @@ const videoSlider = function() {
       recount("forward");
       normalizeForward();
       stopAndPlay(curVideo, "forward");
+
     } else {
       _raiseZindex();
       recount("back");

@@ -8,8 +8,9 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 800px;
+  width: 905px;
   height: 450px;
+  overflow: hidden;
 
   .video-icon {
     position: absolute;
@@ -75,19 +76,18 @@ body {
     &:first-child {
       z-index: 0;
     }
-
     &:nth-child(2) {
-      left: 60px;
+      left: 75px;
       z-index: -1;
       transform: scale(0.9);
     }
     &:nth-child(3) {
-      left: 125px;
+      left: 150px;
       z-index: -2;
       transform: scale(0.8);
     }
     &:nth-child(4) {
-      left: 180px;
+      left: 225px;
       z-index: -3;
       transform: scale(0.7);
     }
