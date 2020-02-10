@@ -82,6 +82,8 @@
 	  var itemsLength = videos.length - 1;
 	
 	  function controller() {
+	    (0, _classesHandler2._classesHandler)(back, 'block-btn', 'add');
+	
 	    recountStyles(videos);
 	    setEventListeners(back, forward);
 	  }
@@ -105,19 +107,21 @@
 	      }
 	
 	      el.style.zIndex = zVal;
-	      el.style.transform = "scale(" + val + ")";
-	      el.style.left = leftVal;
+	
+	      TweenLite.to(el, .2, { left: leftVal, transform: "scale(" + val + ")" });
 	    });
 	  }
 	
 	  function setEventListeners(back, forward) {
 	    back.addEventListener("click", function () {
-	      changeIndexes('back');
+	      changeIndexes('forward');
 	      recountStyles(videos);
 	    });
 	
 	    forward.addEventListener("click", function () {
-	      changeIndexes('forward');
+	      (0, _classesHandler2._classesHandler)(back, 'block-btn', 'remove');
+	
+	      changeIndexes('back');
 	      recountStyles(videos);
 	    });
 	  }

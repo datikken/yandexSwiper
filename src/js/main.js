@@ -20,11 +20,13 @@ const videoSlider = function() {
   let itemsLength = videos.length -1;
 
   function controller() {
+    _classesHandler(back, 'block-btn', 'add');
+
     recountStyles(videos);
     setEventListeners(back, forward);
   }
 
-  function recountStyles() {
+  function recountStyles() {    
     let scaleStep = 1;
     let leftStep = 0;
     let zIndexStep = 0;
@@ -43,19 +45,21 @@ const videoSlider = function() {
         }
 
         el.style.zIndex = zVal;
-        el.style.transform = `scale(${val})`;
-        el.style.left = leftVal;
+
+        TweenLite.to(el, .2, {left: leftVal, transform: `scale(${val})`});
       });
   }
 
   function setEventListeners(back, forward) {
     back.addEventListener("click", function() {
-      changeIndexes('back');
+      changeIndexes('forward');
       recountStyles(videos);
     });
 
     forward.addEventListener("click", function() {
-      changeIndexes('forward');
+      _classesHandler(back, 'block-btn', 'remove');
+
+      changeIndexes('back');
       recountStyles(videos);
     });
   }
