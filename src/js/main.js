@@ -20,38 +20,21 @@ const videoSlider = function() {
   let itemsLength = videos.length -1;
 
   function controller() {
-    setStyles(videos);
+    recountStyles(videos);
     setEventListeners(back, forward);
   }
 
-  function setStyles(videos) {
-    let leftStep = 0;
-    let scaleStep = 1;
-
-    videos.forEach((el) => {
-      let id = el.getAttribute('data-id');
-      
-        if(id === '0') {
-          _classesHandler(el, 'active_slide', 'add');
-        } else {
-          _classesHandler(el, 'active_slide', 'remove');
-        }
-
-        el.style.zIndex = `-${id}` + '!important;';
-        // el.style.left = 0 + leftStep;
-        // el.style.transform = `scale(${scaleStep})`
-
-        // leftStep = leftStep + 75;
-        // scaleStep = scaleStep - .1;
-    });
-  } 
-
-
   function recountStyles() {
     let scaleStep = 1;
+    let leftStep = 0;
+    let zIndexStep = 0;
+
     videos.forEach((el) => {
         let id = parseInt(el.getAttribute('data-id'));
 
+        let val = scaleStep - `.${id}`;
+        let leftVal = leftStep + id * 75;
+        let zVal = zIndexStep - id;
 
         if(id === 0) {
           _classesHandler(el, 'active_slide', 'add');
@@ -59,12 +42,10 @@ const videoSlider = function() {
           _classesHandler(el, 'active_slide', 'remove');
         }
 
-        el.style.zIndex = `-${id}` + '!important;';
-
-        let val = scaleStep - `.${id}`
-          el.style.transform = `scale(${val})`
-   
-      })
+        el.style.zIndex = zVal;
+        el.style.transform = `scale(${val})`;
+        el.style.left = leftVal;
+      });
   }
 
   function setEventListeners(back, forward) {
