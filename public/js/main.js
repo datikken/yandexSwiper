@@ -72,237 +72,93 @@
 	 */
 	var videoSlider = function videoSlider() {
 	  var wrap = document.querySelector(".wrap");
+	  var videos = wrap.querySelectorAll(".video");
+	  //controls
 	  var back = wrap.querySelector(".wrap_controls-left");
 	  var forward = wrap.querySelector(".wrap_controls-right");
-	  var videos = wrap.querySelectorAll(".video");
+	  //autoplay
 	  var playBtn = wrap.querySelector(".topVideo-icon");
+	  //all vids length from 0
+	  var itemsLength = videos.length - 1;
 	
-	  var activeId = 0;
-	  var curVideo = videos[activeId];
-	  var videosLength = videos.length;
-	
-	  videos[videos.length - 1].classList.add("active_slide");
-	  back.classList.add("block-btn");
-	
-	  // _setHref();
-	
-	  back.addEventListener("click", function () {
-	    push(-100);
-	    // _headingChange(wrap);
-	    // _setHref();
-	  });
-	  forward.addEventListener("click", function () {
-	    push(0);
-	    // _headingChange(wrap);
-	    // _setHref();
-	  });
-	  wrap.addEventListener("click", function () {
-	    // playPause();
-	  });
-	
-	  function _setHref() {
-	    var heeadingContainer = document.querySelector("[data-videos-heading]");
-	    var url = wrap.querySelector(".active_slide").getAttribute("data-url");
-	    heeadingContainer.setAttribute("href", url);
-	
-	    console.warn("_headingChange", url);
-	  }
-	  function _headingChange(wrap) {
-	    var heeadingContainer = document.querySelector("[data-videos-heading]");
-	    var dateContainer = document.querySelector("[data-videos-date]");
-	
-	    var param = JSON.parse(wrap.querySelector(".active_slide").getAttribute("data-vid-param"));
-	
-	    var heading = param.heading;
-	    var date = param.date;
-	
-	    heeadingContainer.innerText = heading;
-	    dateContainer.innerText = date;
+	  function controller() {
+	    setStyles(videos);
+	    setEventListeners(back, forward);
 	  }
 	
-	  function activeIndex() {
-	    var lastVideoId = videos[videos.length - 1].getAttribute("data-id");
-	    var activeId = document.querySelector(".active_slide").getAttribute("data-id");
-	
-	    if (parseInt(activeId) === 0) {
-	      back.classList.add("block-btn");
-	    }
-	    if (parseInt(lastVideoId) === parseInt(activeId)) {
-	      forward.classList.add("block-btn");
-	    } else {
-	      forward.classList.remove("block-btn");
-	    }
-	
-	    return activeId;
-	  }
-	  //возвращаем элемент по верху всех остальных элементов
-	  function _raiseZindex() {
-	    var pushedItems = wrap.querySelectorAll(".push-forward");
-	
-	    if (pushedItems.length) {
-	      pushedItems.forEach(function (el) {
-	        el.classList.add("raiseZindex");
-	      });
-	    }
-	  }
-	  function _dropZindex() {
-	    var pushedItems = wrap.querySelectorAll(".push-forward");
-	
-	    if (pushedItems.length) {
-	      pushedItems.forEach(function (el) {
-	        el.classList.add("dropZindex");
-	      });
-	    }
-	  }
-	  //строит элементы один за другим туда сюда
-	  function clearActiveSlide() {
-	    videos.forEach(function (el) {
-	      if ((0, _hasClass.hasClass)(el, "active_slide")) {
-	        el.classList.remove("active_slide");
-	      }
-	    });
-	  }
-	  function clear() {
-	    videos.forEach(function (el) {
-	      if ((0, _hasClass.hasClass)(el, "push-back")) {
-	        el.classList.remove("push-back");
-	      }
-	    });
-	  }
-	  function stopAndPlay(item, type) {
-	    if (item.nodeName === "VIDEO") {
-	      videos.forEach(function (el) {
-	        try {
-	          el.controls = false;
-	          el.pause();
-	        } catch (e) {
-	          console.log(e);
-	        }
-	      });
-	    }
-	    if (type === "back") {
-	      item.controls = true;
-	      item.play();
-	    } else {
-	      item.controls = true;
-	      item.play();
-	    }
-	  }
-	  //выравнивает элементы
-	  function align(arr) {
-	    var iteration = 0;
-	    var step = 0;
+	  function setStyles(videos) {
+	    var leftStep = 0;
 	    var scaleStep = 1;
-	    var zIndexStep = 1;
-	
-	    arr.forEach(function (el) {
-	      var activeSlideIter = 0;
-	      if (iteration > videosLength) {
-	        return;
-	      }
-	      if (iteration === 0) {
-	        (0, _classesHandler2._classesHandler)(el, "active_slide", "add");
-	      }
-	      if (el.classList.value.indexOf("raiseZindex") > 0) {
-	        (0, _classesHandler2._classesHandler)(el, "raiseZindex", "remove");
-	      }
-	      if (el.classList.value.indexOf("dropZindex") > 0) {
-	        (0, _classesHandler2._classesHandler)(el, "dropZindex", "remove");
-	      }
-	
-	      activeSlideIter = activeSlideIter + 1;
-	      el.style.zIndex = 0 - zIndexStep;
-	      el.style.transform = "scale(" + scaleStep + ")";
-	
-	      if (iteration > 3) {
-	        return;
-	      }
-	
-	      el.style.left = step + "px";
-	      zIndexStep = zIndexStep + 1;
-	      step = step + 75;
-	      scaleStep = scaleStep - 0.1;
-	      iteration = iteration + 1;
-	    });
-	  }
-	
-	  //выбираем элементы для построения
-	  function normalizeBackwards() {
-	    var alined = [];
 	
 	    videos.forEach(function (el) {
-	      if (!(0, _hasClass.hasClass)(el, "push-forward")) {
-	        alined.push(el);
-	      }
-	    });
+	      var id = el.getAttribute('data-id');
 	
-	    align(alined);
-	    clear();
+	      if (id === '0') {
+	        (0, _classesHandler2._classesHandler)(el, 'active_slide', 'add');
+	      } else {
+	        (0, _classesHandler2._classesHandler)(el, 'active_slide', 'remove');
+	      }
+	
+	      el.style.zIndex = "-" + id + '!important;';
+	      // el.style.left = 0 + leftStep;
+	      // el.style.transform = `scale(${scaleStep})`
+	
+	      // leftStep = leftStep + 75;
+	      // scaleStep = scaleStep - .1;
+	    });
 	  }
 	
-	  function normalizeForward() {
-	    var leftEl = [];
+	  function recountStyles() {
+	    var scaleStep = 1;
+	    videos.forEach(function (el) {
+	      var id = parseInt(el.getAttribute('data-id'));
+	
+	      if (id === 0) {
+	        (0, _classesHandler2._classesHandler)(el, 'active_slide', 'add');
+	      } else {
+	        (0, _classesHandler2._classesHandler)(el, 'active_slide', 'remove');
+	      }
+	
+	      el.style.zIndex = "-" + id + '!important;';
+	
+	      var val = scaleStep - ("." + id);
+	      el.style.transform = "scale(" + val + ")";
+	    });
+	  }
+	
+	  function setEventListeners(back, forward) {
+	    back.addEventListener("click", function () {
+	      changeIndexes('back');
+	      recountStyles(videos);
+	    });
+	
+	    forward.addEventListener("click", function () {
+	      changeIndexes('forward');
+	      recountStyles(videos);
+	    });
+	  }
+	
+	  function changeIndexes(type) {
+	    var lastIndex = videos[videos.length - 1].getAttribute('data-id');
 	
 	    videos.forEach(function (el) {
-	      if (el.classList.value.indexOf("push") < 0) {
-	        leftEl.push(el);
+	      var id = parseInt(el.getAttribute('data-id'));
+	
+	      if (type === 'forward') {
+	        el.setAttribute('data-id', id + 1);
+	        if (id >= itemsLength) {
+	          el.setAttribute('data-id', 0);
+	        }
+	      } else {
+	        el.setAttribute('data-id', id - 1);
+	        if (id <= 0) {
+	          el.setAttribute('data-id', itemsLength);
+	        }
 	      }
 	    });
-	
-	    align(leftEl);
 	  }
 	
-	  function recount(type) {
-	    switch (type) {
-	      case "forward":
-	        activeId = activeId + 1;
-	        curVideo = videos[activeId];
-	        break;
-	      case "back":
-	        activeId = activeId - 1;
-	        curVideo = videos[activeId];
-	        break;
-	    }
-	  }
-	
-	  function push(direction) {
-	    clearActiveSlide();
-	
-	    if (direction >= 0) {
-	      _dropZindex();
-	
-	      (0, _classesHandler2._classesHandler)(curVideo, "push-back", "remove");
-	      (0, _classesHandler2._classesHandler)(curVideo, "push-forward", "add");
-	      (0, _classesHandler2._classesHandler)(back, "block-btn", "remove");
-	
-	      curVideo.style.zIndex = 99;
-	
-	      recount("forward");
-	      normalizeForward();
-	      stopAndPlay(curVideo, "forward");
-	    } else {
-	      _raiseZindex();
-	      recount("back");
-	
-	      (0, _classesHandler2._classesHandler)(curVideo, "push-forward", "remove");
-	      (0, _classesHandler2._classesHandler)(curVideo, "push-back", "add");
-	
-	      normalizeBackwards();
-	      stopAndPlay(curVideo, "back");
-	    }
-	
-	    activeIndex();
-	  }
-	  function playPause() {
-	    var video = wrap.querySelector(".active_slide");
-	    if (!video.paused) {
-	      video.pause();
-	      playBtn.style.opacity = 1;
-	    } else {
-	      video.play();
-	      playBtn.style.opacity = 0;
-	    }
-	  }
+	  controller();
 	};
 	
 	$(document).ready(function () {
