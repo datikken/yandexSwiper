@@ -45,21 +45,37 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(2);
+	module.exports = __webpack_require__(4);
 
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	$(document).ready(function () {
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.videoSlider = undefined;
+	
+	var _hasClass = __webpack_require__(2);
+	
+	var _classesHandler2 = __webpack_require__(3);
+	
+	/**
+	 * hasClass util
+	 * target, class
+	 * @returns {boolean}
+	 * _classesHandler
+	 * el, class, action
+	 */
+	var videoSlider = function videoSlider() {
 	  var wrap = document.querySelector(".wrap");
 	  var back = wrap.querySelector(".wrap_controls-left");
 	  var forward = wrap.querySelector(".wrap_controls-right");
 	  var videos = wrap.querySelectorAll(".video");
-	  var playBtn = wrap.querySelector(".video-icon");
+	  var playBtn = wrap.querySelector(".topVideo-icon");
 	
 	  var activeId = 0;
 	  var curVideo = videos[activeId];
@@ -68,18 +84,42 @@
 	  videos[videos.length - 1].classList.add("active_slide");
 	  back.classList.add("block-btn");
 	
+	  // _setHref();
+	
 	  back.addEventListener("click", function () {
 	    push(-100);
+	    _headingChange(wrap);
+	    _setHref();
 	  });
 	  forward.addEventListener("click", function () {
 	    push(0);
+	    _headingChange(wrap);
+	    _setHref();
 	  });
 	  wrap.addEventListener("click", function () {
 	    playPause();
 	  });
-	  function hasClass(target, className) {
-	    return new RegExp("(\\s|^)" + className + "(\\s|$)").test(target.className);
+	
+	  function _setHref() {
+	    var heeadingContainer = document.querySelector("[data-videos-heading]");
+	    var url = wrap.querySelector(".active_slide").getAttribute("data-url");
+	    heeadingContainer.setAttribute("href", url);
+	
+	    console.warn("_headingChange", url);
 	  }
+	  function _headingChange(wrap) {
+	    var heeadingContainer = document.querySelector("[data-videos-heading]");
+	    var dateContainer = document.querySelector("[data-videos-date]");
+	
+	    var param = JSON.parse(wrap.querySelector(".active_slide").getAttribute("data-vid-param"));
+	
+	    var heading = param.heading;
+	    var date = param.date;
+	
+	    heeadingContainer.innerText = heading;
+	    dateContainer.innerText = date;
+	  }
+	
 	  function activeIndex() {
 	    var lastVideoId = videos[videos.length - 1].getAttribute("data-id");
 	    var activeId = document.querySelector(".active_slide").getAttribute("data-id");
@@ -117,14 +157,14 @@
 	  //строит элементы один за другим туда сюда
 	  function clearActiveSlide() {
 	    videos.forEach(function (el) {
-	      if (hasClass(el, "active_slide")) {
+	      if ((0, _hasClass.hasClass)(el, "active_slide")) {
 	        el.classList.remove("active_slide");
 	      }
 	    });
 	  }
 	  function clear() {
 	    videos.forEach(function (el) {
-	      if (hasClass(el, "push-back")) {
+	      if ((0, _hasClass.hasClass)(el, "push-back")) {
 	        el.classList.remove("push-back");
 	      }
 	    });
@@ -161,13 +201,13 @@
 	        return;
 	      }
 	      if (iteration === 0) {
-	        _classesHandler(el, "active_slide", "add");
+	        (0, _classesHandler2._classesHandler)(el, "active_slide", "add");
 	      }
 	      if (el.classList.value.indexOf("raiseZindex") > 0) {
-	        _classesHandler(el, "raiseZindex", "remove");
+	        (0, _classesHandler2._classesHandler)(el, "raiseZindex", "remove");
 	      }
 	      if (el.classList.value.indexOf("dropZindex") > 0) {
-	        _classesHandler(el, "dropZindex", "remove");
+	        (0, _classesHandler2._classesHandler)(el, "dropZindex", "remove");
 	      }
 	
 	      activeSlideIter = activeSlideIter + 1;
@@ -178,7 +218,7 @@
 	        return;
 	      }
 	
-	      el.style.left = 0 + step;
+	      el.style.left = step + "px";
 	      zIndexStep = zIndexStep + 1;
 	      step = step + 75;
 	      scaleStep = scaleStep - 0.1;
@@ -186,19 +226,12 @@
 	    });
 	  }
 	
-	  function _classesHandler(el, elClass, type) {
-	    if (type == "add") {
-	      el.classList.add(elClass);
-	    } else {
-	      el.classList.remove(elClass);
-	    }
-	  }
 	  //выбираем элементы для построения
 	  function normalizeBackwards() {
 	    var alined = [];
 	
 	    videos.forEach(function (el) {
-	      if (!hasClass(el, "push-forward")) {
+	      if (!(0, _hasClass.hasClass)(el, "push-forward")) {
 	        alined.push(el);
 	      }
 	    });
@@ -237,9 +270,9 @@
 	
 	    if (direction >= 0) {
 	      _dropZindex();
-	      _classesHandler(curVideo, "push-back", "remove");
-	      _classesHandler(curVideo, "push-forward", "add");
-	      _classesHandler(back, "block-btn", "remove");
+	      (0, _classesHandler2._classesHandler)(curVideo, "push-back", "remove");
+	      (0, _classesHandler2._classesHandler)(curVideo, "push-forward", "add");
+	      (0, _classesHandler2._classesHandler)(back, "block-btn", "remove");
 	
 	      curVideo.style.zIndex = 99;
 	
@@ -250,8 +283,8 @@
 	      _raiseZindex();
 	      recount("back");
 	
-	      _classesHandler(curVideo, "push-forward", "remove");
-	      _classesHandler(curVideo, "push-back", "add");
+	      (0, _classesHandler2._classesHandler)(curVideo, "push-forward", "remove");
+	      (0, _classesHandler2._classesHandler)(curVideo, "push-back", "add");
 	
 	      normalizeBackwards();
 	      stopAndPlay(curVideo, "back");
@@ -269,10 +302,50 @@
 	      playBtn.style.opacity = 0;
 	    }
 	  }
+	};
+	
+	$(document).ready(function () {
+	  videoSlider();
 	});
+	
+	exports.videoSlider = videoSlider;
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	function hasClass(target, className) {
+	  return new RegExp("(\\s|^)" + className + "(\\s|$)").test(target.className);
+	}
+	
+	exports.hasClass = hasClass;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	function _classesHandler(el, elClass, type) {
+	  if (type == "add") {
+	    el.classList.add(elClass);
+	  } else {
+	    el.classList.remove(elClass);
+	  }
+	}
+	
+	exports._classesHandler = _classesHandler;
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

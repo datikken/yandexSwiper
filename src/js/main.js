@@ -1,9 +1,19 @@
-$(document).ready(function() {
+/**
+ * hasClass util
+ * target, class
+ * @returns {boolean}
+ * _classesHandler
+ * el, class, action
+ */
+import { hasClass } from "./functions/_hasClass";
+import { _classesHandler } from "./functions/_classesHandler";
+
+const videoSlider = function() {
   let wrap = document.querySelector(".wrap");
   let back = wrap.querySelector(".wrap_controls-left");
   let forward = wrap.querySelector(".wrap_controls-right");
   let videos = wrap.querySelectorAll(".video");
-  let playBtn = wrap.querySelector(".video-icon");
+  let playBtn = wrap.querySelector(".topVideo-icon");
 
   let activeId = 0;
   let curVideo = videos[activeId];
@@ -12,18 +22,44 @@ $(document).ready(function() {
   videos[videos.length - 1].classList.add("active_slide");
   back.classList.add("block-btn");
 
+  // _setHref();
+
   back.addEventListener("click", function() {
     push(-100);
+    _headingChange(wrap);
+    _setHref();
   });
   forward.addEventListener("click", function() {
     push(0);
+    _headingChange(wrap);
+    _setHref();
   });
   wrap.addEventListener("click", function() {
     playPause();
   });
-  function hasClass(target, className) {
-    return new RegExp("(\\s|^)" + className + "(\\s|$)").test(target.className);
+
+  function _setHref() {
+    let heeadingContainer = document.querySelector("[data-videos-heading]");
+    let url = wrap.querySelector(".active_slide").getAttribute("data-url");
+    heeadingContainer.setAttribute("href", url);
+
+    console.warn("_headingChange", url);
   }
+  function _headingChange(wrap) {
+    let heeadingContainer = document.querySelector("[data-videos-heading]");
+    let dateContainer = document.querySelector("[data-videos-date]");
+
+    let param = JSON.parse(
+      wrap.querySelector(".active_slide").getAttribute("data-vid-param")
+    );
+
+    let heading = param.heading;
+    let date = param.date;
+
+    heeadingContainer.innerText = heading;
+    dateContainer.innerText = date;
+  }
+
   function activeIndex() {
     let lastVideoId = videos[videos.length - 1].getAttribute("data-id");
     let activeId = document
@@ -124,7 +160,7 @@ $(document).ready(function() {
         return;
       }
 
-      el.style.left = 0 + step;
+      el.style.left = `${step}px`;
       zIndexStep = zIndexStep + 1;
       step = step + 75;
       scaleStep = scaleStep - 0.1;
@@ -132,13 +168,6 @@ $(document).ready(function() {
     });
   }
 
-  function _classesHandler(el, elClass, type) {
-    if (type == "add") {
-      el.classList.add(elClass);
-    } else {
-      el.classList.remove(elClass);
-    }
-  }
   //выбираем элементы для построения
   function normalizeBackwards() {
     let alined = [];
@@ -215,4 +244,11 @@ $(document).ready(function() {
       playBtn.style.opacity = 0;
     }
   }
-});
+};
+
+
+$(document).ready(function() {
+  videoSlider();
+})
+
+export { videoSlider };
