@@ -14,85 +14,106 @@ const videoSlider = function() {
   let back = wrap.querySelector(".wrap_controls-left");
   let forward = wrap.querySelector(".wrap_controls-right");
   //autoplay
-  let playBtn = wrap.querySelector(".topVideo-icon");
+  let controls = wrap.querySelector(".wrap_controls");
   //all vids length from 0
   let itemsLength = videos.length - 1;
 
   function controller() {
-    _classesHandler(back, 'block-btn', 'add');
+    _classesHandler(back, "block-btn", "add");
     recountStyles(videos);
-    setEventListeners(back, forward);
+    setEventListeners(wrap, back, forward);
   }
 
-  function recountStyles(items) {    
+  function recountStyles(items) {
     let scaleStep = 1;
     let leftStep = 0;
     let zIndexStep = 0;
 
-    items.forEach((el) => {
-        let id = parseInt(el.getAttribute('data-id'));
-        _classesHandler(el, 'push-forward', 'remove');
+    items.forEach(el => {
+      let id = parseInt(el.getAttribute("data-id"));
 
-        let val = scaleStep - `.${id}`;
-        let leftVal = leftStep + id * 75;
-        let zVal = zIndexStep - id;
+      _classesHandler(el, "push-forward", "remove");
 
-        if(id === 0) {
-          _classesHandler(el, 'active_slide', 'add');
-        } else {
-          _classesHandler(el, 'active_slide', 'remove');
-        }
+      let val = scaleStep - `.${id}`;
+      let leftVal = leftStep + id * 75;
+      let zVal = zIndexStep - id;
 
-        if(id === itemsLength) {
-          _classesHandler(el, 'push-forward', 'add');
-        }
+      if (id === 0) {
+        _classesHandler(el, "active_slide", "add");
+      } else {
+        _classesHandler(el, "active_slide", "remove");
+      }
 
-        el.style.zIndex = zVal;
-       
-        TweenLite.to(el, .1, {ease: "sine.out", left: leftVal, transform: `scale(${val})`});
+      if (id === itemsLength) {
+        _classesHandler(el, "push-forward", "add");
+      }
+
+      el.style.zIndex = zVal;
+
+      TweenLite.to(el, 0.1, {
+        ease: "sine.out",
+        left: leftVal,
+        transform: `scale(${val})`
       });
+    });
   }
 
-  function setEventListeners(back, forward) {
+  function setEventListeners(wrap, back, forward) {
+    controls.addEventListener("click", function() {
+      console.log('test');
+    });
+
     back.addEventListener("click", function() {
-      changeIndexes('back');
+      changeIndexes("back");
       recountStyles(videos);
+      playPause();
     });
 
     forward.addEventListener("click", function() {
-      _classesHandler(back, 'block-btn', 'remove');
-
-      changeIndexes('forward');
+      _classesHandler(back, "block-btn", "remove");
+      changeIndexes("forward");
       recountStyles(videos);
+      playPause();
     });
   }
 
+  function playPause() {
+    let video = wrap.querySelector(".active_slide");
+
+    videos.forEach(el => {
+      el.pause();
+    });
+
+    if (!video.paused) {
+      video.pause();
+    } else {
+      video.play();
+    }
+  }
   function changeIndexes(type) {
-      videos.forEach(el => {
-        let id = parseInt(el.getAttribute('data-id'));
+    videos.forEach(el => {
+      let id = parseInt(el.getAttribute("data-id"));
 
-        if(type === 'back') {
-          el.setAttribute('data-id', id + 1);
+      if (type === "back") {
+        el.setAttribute("data-id", id + 1);
 
-          if(id >= itemsLength) {
-            el.setAttribute('data-id', 0)
-          }
-
-        } else {
-          el.setAttribute('data-id', id - 1);
-          if(id <= 0) {
-            el.setAttribute('data-id', itemsLength)
-          }
+        if (id >= itemsLength) {
+          el.setAttribute("data-id", 0);
         }
-      });
+      } else {
+        el.setAttribute("data-id", id - 1);
+        if (id <= 0) {
+          el.setAttribute("data-id", itemsLength);
+        }
+      }
+    });
   }
 
   controller();
 };
 
-
 $(document).ready(function() {
   videoSlider();
-})
+});
 
 export { videoSlider };

@@ -45,7 +45,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(4);
+	module.exports = __webpack_require__(3);
 
 
 /***/ }),
@@ -59,7 +59,7 @@
 	});
 	exports.videoSlider = undefined;
 	
-	var _classesHandler2 = __webpack_require__(3);
+	var _classesHandler2 = __webpack_require__(2);
 	
 	var videoSlider = function videoSlider() {
 	  var wrap = document.querySelector(".wrap");
@@ -68,14 +68,14 @@
 	  var back = wrap.querySelector(".wrap_controls-left");
 	  var forward = wrap.querySelector(".wrap_controls-right");
 	  //autoplay
-	  var playBtn = wrap.querySelector(".topVideo-icon");
+	  var controls = wrap.querySelector(".wrap_controls");
 	  //all vids length from 0
 	  var itemsLength = videos.length - 1;
 	
 	  function controller() {
-	    (0, _classesHandler2._classesHandler)(back, 'block-btn', 'add');
+	    (0, _classesHandler2._classesHandler)(back, "block-btn", "add");
 	    recountStyles(videos);
-	    setEventListeners(back, forward);
+	    setEventListeners(wrap, back, forward);
 	  }
 	
 	  function recountStyles(items) {
@@ -84,57 +84,80 @@
 	    var zIndexStep = 0;
 	
 	    items.forEach(function (el) {
-	      var id = parseInt(el.getAttribute('data-id'));
-	      (0, _classesHandler2._classesHandler)(el, 'push-forward', 'remove');
+	      var id = parseInt(el.getAttribute("data-id"));
+	
+	      (0, _classesHandler2._classesHandler)(el, "push-forward", "remove");
 	
 	      var val = scaleStep - ("." + id);
 	      var leftVal = leftStep + id * 75;
 	      var zVal = zIndexStep - id;
 	
 	      if (id === 0) {
-	        (0, _classesHandler2._classesHandler)(el, 'active_slide', 'add');
+	        (0, _classesHandler2._classesHandler)(el, "active_slide", "add");
 	      } else {
-	        (0, _classesHandler2._classesHandler)(el, 'active_slide', 'remove');
+	        (0, _classesHandler2._classesHandler)(el, "active_slide", "remove");
 	      }
 	
 	      if (id === itemsLength) {
-	        (0, _classesHandler2._classesHandler)(el, 'push-forward', 'add');
+	        (0, _classesHandler2._classesHandler)(el, "push-forward", "add");
 	      }
 	
 	      el.style.zIndex = zVal;
 	
-	      TweenLite.to(el, .1, { ease: "sine.out", left: leftVal, transform: "scale(" + val + ")" });
+	      TweenLite.to(el, 0.1, {
+	        ease: "sine.out",
+	        left: leftVal,
+	        transform: "scale(" + val + ")"
+	      });
 	    });
 	  }
 	
-	  function setEventListeners(back, forward) {
+	  function setEventListeners(wrap, back, forward) {
+	    controls.addEventListener("click", function () {
+	      console.log('test');
+	    });
+	
 	    back.addEventListener("click", function () {
-	      changeIndexes('back');
+	      changeIndexes("back");
 	      recountStyles(videos);
+	      playPause();
 	    });
 	
 	    forward.addEventListener("click", function () {
-	      (0, _classesHandler2._classesHandler)(back, 'block-btn', 'remove');
-	
-	      changeIndexes('forward');
+	      (0, _classesHandler2._classesHandler)(back, "block-btn", "remove");
+	      changeIndexes("forward");
 	      recountStyles(videos);
+	      playPause();
 	    });
 	  }
 	
+	  function playPause() {
+	    var video = wrap.querySelector(".active_slide");
+	
+	    videos.forEach(function (el) {
+	      el.pause();
+	    });
+	
+	    if (!video.paused) {
+	      video.pause();
+	    } else {
+	      video.play();
+	    }
+	  }
 	  function changeIndexes(type) {
 	    videos.forEach(function (el) {
-	      var id = parseInt(el.getAttribute('data-id'));
+	      var id = parseInt(el.getAttribute("data-id"));
 	
-	      if (type === 'back') {
-	        el.setAttribute('data-id', id + 1);
+	      if (type === "back") {
+	        el.setAttribute("data-id", id + 1);
 	
 	        if (id >= itemsLength) {
-	          el.setAttribute('data-id', 0);
+	          el.setAttribute("data-id", 0);
 	        }
 	      } else {
-	        el.setAttribute('data-id', id - 1);
+	        el.setAttribute("data-id", id - 1);
 	        if (id <= 0) {
-	          el.setAttribute('data-id', itemsLength);
+	          el.setAttribute("data-id", itemsLength);
 	        }
 	      }
 	    });
@@ -157,8 +180,7 @@
 	exports.videoSlider = videoSlider;
 
 /***/ }),
-/* 2 */,
-/* 3 */
+/* 2 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -177,7 +199,7 @@
 	exports._classesHandler = _classesHandler;
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

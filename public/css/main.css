@@ -11,7 +11,7 @@ body {
   width: 901px;
   height: 450px;
   overflow: hidden; }
-  .wrap .video-icon {
+  .wrap .topVideo-icon {
     position: absolute;
     z-index: 999999;
     top: 50%;
@@ -21,7 +21,7 @@ body {
     cursor: pointer;
     transition: opacity 0.1s;
     opacity: 1; }
-    .wrap .video-icon:after {
+    .wrap .topVideo-icon:after {
       content: "";
       display: block;
       background-size: contain;
