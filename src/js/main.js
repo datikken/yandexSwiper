@@ -13,15 +13,17 @@ const videoSlider = function() {
   //controls
   let back = wrap.querySelector(".wrap_controls-left");
   let forward = wrap.querySelector(".wrap_controls-right");
-  //autoplay
-  let controls = wrap.querySelector(".wrap_controls");
+  let btn = wrap.querySelector(".topVideo-icon");
+
+  let state = null;
+
   //all vids length from 0
   let itemsLength = videos.length - 1;
 
   function controller() {
     _classesHandler(back, "block-btn", "add");
     recountStyles(videos);
-    setEventListeners(wrap, back, forward);
+    setEventListeners(btn, back, forward);
   }
 
   function recountStyles(items) {
@@ -58,38 +60,42 @@ const videoSlider = function() {
     });
   }
 
-  function setEventListeners(wrap, back, forward) {
-    controls.addEventListener("click", function() {
-      console.log('test');
+  function setEventListeners(btn, back, forward) {
+    btn.addEventListener("click", function() {
+      playPause();
     });
 
     back.addEventListener("click", function() {
       changeIndexes("back");
       recountStyles(videos);
-      playPause();
     });
 
     forward.addEventListener("click", function() {
       _classesHandler(back, "block-btn", "remove");
       changeIndexes("forward");
       recountStyles(videos);
-      playPause();
     });
   }
 
   function playPause() {
-    let video = wrap.querySelector(".active_slide");
-
     videos.forEach(el => {
       el.pause();
     });
 
-    if (!video.paused) {
-      video.pause();
+    let activeSlide = wrap.querySelector(".active_slide");
+
+    if (!state) {
+      activeSlide.play();
+      activeSlide.controls = true;
+      state = true;
+      btn.style.opacity = 0;
     } else {
-      video.play();
+      activeSlide.pause();
+      state = null;
+      btn.style.opacity = 1;
     }
   }
+
   function changeIndexes(type) {
     videos.forEach(el => {
       let id = parseInt(el.getAttribute("data-id"));
