@@ -15,7 +15,7 @@ const videoSlider = function() {
   let forward = wrap.querySelector(".wrap_controls-right");
   let btn = wrap.querySelector(".topVideo-icon");
 
-  let state = null;
+  let playedState = null;
 
   //all vids length from 0
   let itemsLength = videos.length - 1;
@@ -23,7 +23,82 @@ const videoSlider = function() {
   function controller() {
     _classesHandler(back, "block-btn", "add");
     recountStyles(videos);
+
     setEventListeners(btn, back, forward);
+
+    _setHref();
+
+  }
+
+  function setEventListeners(btn, back, forward) {
+    btn.addEventListener("click", function() {
+      playPause();
+    });
+
+    back.addEventListener("click", function() {
+      changeIndexes("back");
+      recountStyles(videos);
+      _headingChange(wrap);
+      pauseAll();
+    });
+
+    forward.addEventListener("click", function() {
+      _classesHandler(back, "block-btn", "remove");
+      changeIndexes("forward");
+      recountStyles(videos);
+      pauseAll();
+      _setHref();
+    });
+  }
+
+  function _setHref() {
+    let heeadingContainer = document.querySelector("[data-videos-heading]");
+
+    if(heeadingContainer) {
+      let url = wrap.querySelector(".active_slide").getAttribute("data-url");
+      heeadingContainer.setAttribute("href", url);
+  
+      console.warn("_headingChange", url);
+    }
+  }
+
+  function _headingChange(wrap) {
+    let heeadingContainer = document.querySelector("[data-videos-heading]");
+    let dateContainer = document.querySelector("[data-videos-date]");
+
+    let param = JSON.parse(
+      wrap.querySelector(".active_slide").getAttribute("data-vid-param")
+    );
+
+    let heading = param.heading;
+    let date = param.date;
+
+    heeadingContainer.innerText = heading;
+    dateContainer.innerText = date;
+  }
+
+  function pauseAll() {
+    btn.style.opacity = 1;
+
+    videos.forEach(el => {
+      el.pause();
+      el.controls = false;
+    });
+  }
+
+  function playPause() {
+    let activeSlide = wrap.querySelector(".active_slide");
+    
+    if (!playedState) {
+      activeSlide.play();
+      activeSlide.controls = true;
+      playedState = true;
+      btn.style.opacity = 0;
+    } else {
+      activeSlide.pause();
+      playedState = null;
+      btn.style.opacity = 1;
+    }
   }
 
   function recountStyles(items) {
@@ -58,42 +133,6 @@ const videoSlider = function() {
         transform: `scale(${val})`
       });
     });
-  }
-
-  function setEventListeners(btn, back, forward) {
-    btn.addEventListener("click", function() {
-      playPause();
-    });
-
-    back.addEventListener("click", function() {
-      changeIndexes("back");
-      recountStyles(videos);
-    });
-
-    forward.addEventListener("click", function() {
-      _classesHandler(back, "block-btn", "remove");
-      changeIndexes("forward");
-      recountStyles(videos);
-    });
-  }
-
-  function playPause() {
-    videos.forEach(el => {
-      el.pause();
-    });
-
-    let activeSlide = wrap.querySelector(".active_slide");
-
-    if (!state) {
-      activeSlide.play();
-      activeSlide.controls = true;
-      state = true;
-      btn.style.opacity = 0;
-    } else {
-      activeSlide.pause();
-      state = null;
-      btn.style.opacity = 1;
-    }
   }
 
   function changeIndexes(type) {
